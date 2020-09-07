@@ -1,0 +1,32 @@
+scalar DateTime
+
+type SuccessMessage {
+  message: String
+}
+
+type Query {
+  me: User
+  user(id: ID!): User
+  users: [User!]!
+}
+
+type Mutation {
+  signup(email: String!, password: String!, name: String!): User!
+  login(email: String!, password: String!): User!
+  logout: SuccessMessage
+  activateAccount: SuccessMessage
+  confirmAccount(token: String!): User!
+  resetRequest(email: String!): SuccessMessage
+  resetPassword(token: String!, password: String!): User!
+}
+
+type User {
+  id: ID!
+  email: String!
+  name: String!
+  password: String!
+  registered_on: DateTime!
+  confirmed_on: DateTime
+  updated_on: DateTime!
+  confirmed: Boolean!
+}

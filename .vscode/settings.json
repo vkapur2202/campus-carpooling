@@ -1,0 +1,11 @@
+{
+  "eslint.run": "onSave",
+  "editor.formatOnSave": true,
+  "eslint.format.enable": true,
+  "[sql]": {
+    "editor.formatOnSave": false
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}
