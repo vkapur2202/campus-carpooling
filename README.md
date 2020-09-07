@@ -73,7 +73,16 @@ If you ever need to make a change to the dev db schema (adding or deleting table
 $ psql --host=campus-carpoolingdb.cb7isu5t5kyq.us-east-2.rds.amazonaws.com --port=5432 --username=postgres --password --dbname=carpoolingDB < database/init_db.sql
 $ npm run refresh-schema
 ```
+You will be prompted for a password. This should be the password for the database access. the command
 
+```sh
+$ npm run refresh-schema
+```
+will also run
+```sh
+$ npx prisma generate
+```
+and therefore it is not necessary to generate the prisma client again.
 ### Regenerate Prisma Client
 
 The Prisma Client creates all the GraphQL types for our backend so it's important that it's up-to-date with the `database/schema.prisma` file. If you ever make a change in `/database` make sure to run:
