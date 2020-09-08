@@ -10,7 +10,7 @@
 ### Clone Repo
 
 ```sh
-git@github.com:vkapur2202/campus-carpooling.git
+git clone git@github.com:vkapur2202/campus-carpooling.git
 ```
 
 ## Client Development
