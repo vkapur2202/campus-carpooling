@@ -84,8 +84,12 @@ export const User = {
 
     const newPassword: string = await bcrypt.hash(password, 10)
     const updatedUser: UserType = await ctx.prisma.user.update({
-      where: { id: uId, }, data: {
-        password: newPassword, updated_on: moment().toDate(), // TODO: make POSTGRES trigger to do this
+      where: {
+        id: uId,
+      },
+      data: {
+        password: newPassword,
+        updated_on: moment().toDate(), // TODO: make POSTGRES trigger to do this
       },
     })
     return updatedUser
