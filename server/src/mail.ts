@@ -2,13 +2,13 @@ import config from './config'
 const nodemailer = require('nodemailer')
 
 export const transport = nodemailer.createTransport({
-  //   host: config.MAIL_HOST,
-  //   port: config.MAIL_PORT,
-  service: 'gmail',
-  auth: {
-    user: config.MAIL_USER,
-    pass: config.MAIL_PASS,
-  },
+    host: config.MAIL_HOST,
+    port: config.MAIL_PORT,
+    service: 'gmail',
+    auth: {
+        user: config.MAIL_USER,
+        pass: config.MAIL_PASS,
+    },
 })
 
 export const activateAccountEmail = (text) => `
