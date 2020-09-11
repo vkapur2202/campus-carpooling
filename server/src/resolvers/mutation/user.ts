@@ -74,9 +74,10 @@ export const User = {
   },
 
   async resetPassword(parent, { token, password }, ctx: Context): Promise<UserType | Error> {
-    let userId
+    let uId
     try {
-      userId = jwt.verify(token, config.APP_SECRET)
+      uId = jwt.verify(token, config.APP_SECRET).userId
+      console.log(uId)
     } catch (e) {
       throw new Error('The password reset token is either invalid or expired.')
     }
@@ -84,7 +85,7 @@ export const User = {
     const newPassword: string = await bcrypt.hash(password, 10)
     const updatedUser: UserType = await ctx.prisma.user.update({
       where: {
-        id: userId,
+        id: uId,
       },
       data: {
         password: newPassword,
