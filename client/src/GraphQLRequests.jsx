@@ -56,6 +56,26 @@ export const CONFIRM_ACCOUNT_MUTATION = gql`
   }
 `;
 
+export const PROFILE_MUTATION = gql`
+  mutation(
+    $year: String!
+    $gender: String!
+    $can_drive: Boolean!
+    $max_capacity: Int!
+  ) {
+    setProfile(
+      year: $year
+      gender: $gender
+      can_drive: $can_drive
+      max_capacity: $max_capacity
+    ) {
+      id
+      name
+      year
+    }
+  }
+`;
+
 export const RESET_REQUEST_MUTATION = gql`
   mutation($email: String!) {
     resetRequest(email: $email) {

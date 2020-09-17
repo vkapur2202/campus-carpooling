@@ -12,8 +12,25 @@ model user {
   name         String
   email        String    @unique
   password     String
+  year         String?
+  gender       String?
+  can_drive    Boolean?  @default(false)
+  max_capacity Int?      @default(0)
   created_on   DateTime? @default(now())
   updated_on   DateTime? @default(now())
   confirmed_on DateTime?
   confirmed    Boolean?  @default(false)
+}
+
+model active_event {
+  id               Int       @default(autoincrement()) @id
+  max_participants Int
+  start_location   String
+  end_location     String
+  event_date       DateTime
+  created_on       DateTime? @default(now())
+  updated_on       DateTime? @default(now())
+  user_id          Int
+
+  @@map("active event")
 }

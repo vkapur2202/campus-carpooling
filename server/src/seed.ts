@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
+const bcrypt = require('bcryptjs')
 
 const main = async () => {
   await prisma.user.deleteMany({})
@@ -9,7 +10,7 @@ const main = async () => {
     data: {
       name: 'John Doe',
       email: 'john.doe@case.edu',
-      password: 'pass',
+      password: await bcrypt.hash("password", 10),
     },
   })
 
@@ -17,7 +18,7 @@ const main = async () => {
     data: {
       name: 'Jane Doe',
       email: 'jane.doe@case.edu',
-      password: 'password',
+      password: await bcrypt.hash("pass123", 10),
     },
   })
 
@@ -25,7 +26,7 @@ const main = async () => {
     data: {
       name: 'Vivek Kapur',
       email: 'vkk9@case.edu',
-      password: 'something>password',
+      password: await bcrypt.hash("pass", 10),
     },
   })
 
