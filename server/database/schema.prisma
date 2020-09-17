@@ -20,17 +20,18 @@ model user {
   updated_on   DateTime? @default(now())
   confirmed_on DateTime?
   confirmed    Boolean?  @default(false)
+  event        event[]
 }
 
-model active_event {
+model event {
   id               Int       @default(autoincrement()) @id
   max_participants Int
   start_location   String
   end_location     String
   event_date       DateTime
+  is_active        Boolean?  @default(true)
   created_on       DateTime? @default(now())
   updated_on       DateTime? @default(now())
   user_id          Int
-
-  @@map("active event")
+  user             user      @relation(fields: [user_id], references: [id])
 }

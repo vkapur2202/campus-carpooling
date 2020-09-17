@@ -8,6 +8,10 @@ type Query {
   me: User
   user(id: ID!): User
   users: [User!]!
+  event(id: ID!): Event
+  activeEvents: [Event!]!
+  inactiveEvents: [Event!]!
+  events: [Event!]!
 }
 
 type Mutation {
@@ -19,6 +23,8 @@ type Mutation {
   setProfile(year: String!, gender: String!, can_drive: Boolean!, max_capacity: Int!): User!
   resetRequest(email: String!): SuccessMessage
   resetPassword(token: String!, password: String!): User!
+  createEvent(max_participants: Int!, start_location: String!, end_location: String!, event_date: DateTime!): Event!
+  deleteEvent(event_date: DateTime!): SuccessMessage
 }
 
 type User {
@@ -34,4 +40,16 @@ type User {
   max_capacity: Int!
   updated_on: DateTime!
   confirmed: Boolean!
+}
+
+type Event {
+  id: ID!
+  max_participants: Int!
+  start_location: String!
+  end_location: String!
+  event_date: DateTime!
+  is_active: Boolean!
+  created_on: DateTime!
+  updated_on: DateTime!  
+  user: User! 
 }
