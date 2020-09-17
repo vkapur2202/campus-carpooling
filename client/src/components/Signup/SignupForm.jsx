@@ -9,10 +9,6 @@ import { Redirect } from "react-router";
 
 function SignupForm() {
   const initialFields = {
-    name: "Namanh Kapur",
-    email: "nkk1@rice.edu",
-    password: "pass",
-    confirm: "pass",
   };
   const [fields, setFields] = useState(initialFields);
   const [hasSignedUp, setHasSignedUp] = useState(false);
@@ -68,9 +64,8 @@ function SignupForm() {
         <Form.Group controlId="nameGroup">
           <Form.Label>Full name</Form.Label>
           <Form.Control
-            defaultValue="Namanh Kapur"
             type="text"
-            placeholder="e.g. John Doe"
+            placeholder="Enter your full name"
             onChange={handleInputChange}
             name="name"
           />
@@ -79,7 +74,6 @@ function SignupForm() {
         <Form.Group controlId="emailGroup">
           <Form.Label>Email address</Form.Label>
           <Form.Control
-            defaultValue="nkk1@rice.edu"
             type="email"
             placeholder="Enter email"
             onChange={handleInputChange}
@@ -93,17 +87,18 @@ function SignupForm() {
         <Form.Group controlId="passwordGroup">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            defaultValue="pass"
             type="password"
             placeholder="Password"
             onChange={handleInputChange}
             name="password"
           />
+          <Form.Text className="text-muted">
+            Password requirements
+          </Form.Text>
         </Form.Group>
         <Form.Group controlId="confirmPasswordGroup">
           <Form.Label>Confirm password</Form.Label>
           <Form.Control
-            defaultValue="pass"
             type="password"
             placeholder="Password"
             onChange={handleInputChange}

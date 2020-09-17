@@ -8,10 +8,6 @@ import { Redirect } from "react-router";
 
 function ProfileForm() {
   const initialFields = {
-    year: "Freshman",
-    gender: "Man",
-    can_drive: true,
-    max_capacity: 4,
   };
   const [fields, setFields] = useState(initialFields);
   const [profileVariable, setProfileVariable] = useState({
@@ -41,7 +37,7 @@ function ProfileForm() {
         year: fields.year,
         gender: fields.gender,
         can_drive: fields.can_drive == "true" ? true : false,
-        max_capacity: parseInt(fields.max_capacity, 10),
+        max_capacity: fields.can_drive == "true" ? parseInt(fields.max_capacity, 10) : 0,
       },
     };
     profile(profileInput)
@@ -110,6 +106,16 @@ function ProfileForm() {
             name="can_drive"
             onChange={handleInputChange}
             value="false"
+          />
+        </Form.Group>
+        <Form.Group controlId="maxCapacityGroup">
+          <Form.Label>Maximum capacity of your vehicle</Form.Label>
+          <Form.Control
+            type="number"
+            placeholder="Enter max capacity"
+            onChange={handleInputChange}
+            name="max_capacity"
+            readOnly={fields.can_drive == "false" ? true : false}
           />
         </Form.Group>
         <Button variant="primary" type="submit">
