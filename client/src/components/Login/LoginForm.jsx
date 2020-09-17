@@ -9,8 +9,6 @@ import { Context } from "../Store/Store";
 
 function LoginForm() {
   const initialFields = {
-    email: "vkk9@case.edu",
-    password: "something>password",
   };
   const [state, dispatch] = useContext(Context);
   const [fields, setFields] = useState(initialFields);
