@@ -57,7 +57,7 @@ export const Auth = {
     // set the jwt as a cookie on the response
     ctx.response.cookie(config.TOKEN_NAME, token, {
       httpOnly: false,
-      // maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
+      maxAge: 1000 * 60 * 60, // 1 hour cookie
     })
 
     return user
