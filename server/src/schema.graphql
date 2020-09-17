@@ -16,6 +16,7 @@ type Mutation {
   logout: SuccessMessage
   activateAccount: SuccessMessage
   confirmAccount(token: String!): User!
+  setProfile(year: String!, gender: String!, can_drive: Boolean!, max_capacity: Int!): User!
   resetRequest(email: String!): SuccessMessage
   resetPassword(token: String!, password: String!): User!
 }
@@ -27,6 +28,10 @@ type User {
   password: String!
   registered_on: DateTime!
   confirmed_on: DateTime
+  year: String
+  gender: String
+  can_drive: Boolean!
+  max_capacity: Int!
   updated_on: DateTime!
   confirmed: Boolean!
 }

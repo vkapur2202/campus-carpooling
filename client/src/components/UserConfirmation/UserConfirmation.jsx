@@ -5,6 +5,18 @@ import { useMutation } from "@apollo/react-hooks";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+function RedirectToProfile() {
+  return (
+    <div>
+      <p>
+        You've successfully activated your account. Click here to redirect to
+        your profile page:
+      </p>
+      <Link to="/profile">Profile</Link>
+    </div>
+  );
+}
+
 function RedirectToLogin() {
   return (
     <div>
@@ -45,7 +57,7 @@ function UserConfirmation(props) {
     <div className="content">
       <div className="vertical-content">
         <h1>Confirmation</h1>
-        <RedirectToLogin />
+        <p>{confirmSuccess ? <RedirectToProfile /> : <RedirectToLogin />}</p>
       </div>
     </div>
   );

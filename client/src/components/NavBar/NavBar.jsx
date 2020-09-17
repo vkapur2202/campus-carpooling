@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import logo from '../../assets/car-theft-64.png';
-import reversedlogo from '../../assets/reverse-car-theft-64.png'
+import logo from "../../assets/car-theft-64.png";
+import reversedlogo from "../../assets/reverse-car-theft-64.png";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import Logout from "../Logout/Logout";
@@ -24,6 +24,13 @@ function AboutLink() {
   );
 }
 
+function ProfileLink() {
+  return (
+    <div className="navbar-right-item">
+      <Link to="/profile">Profile</Link>
+    </div>
+  );
+}
 function LogoutLink() {
   return (
     <div className="navbar-right-item">
@@ -54,6 +61,7 @@ function Nav() {
         <AboutLink />
         {state.loggedIn && (
           <>
+            <ProfileLink />
             <LogoutLink />
           </>
         )}

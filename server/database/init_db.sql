@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS "user" CASCADE;
+DROP TABLE IF EXISTS "active event" CASCADE;
 
 CREATE TABLE IF NOT EXISTS "user" (
   id SERIAL PRIMARY KEY,
@@ -7,7 +8,7 @@ CREATE TABLE IF NOT EXISTS "user" (
   password VARCHAR(255) NOT NULL,
   year VARCHAR(100), 
   gender VARCHAR(100),
-  can_drive BOOLEAN NOT NULL,
+  can_drive BOOLEAN DEFAULT FALSE,
   max_capacity INTEGER DEFAULT 0,
   created_on TIMESTAMP DEFAULT NOW(),  
   updated_on TIMESTAMP DEFAULT NOW(),

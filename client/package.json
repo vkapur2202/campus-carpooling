@@ -9,7 +9,7 @@
     "build": "dotenv -- react-scripts build",
     "test": "dotenv -- react-scripts test",
     "eject": "dotenv -- react-scripts eject",
-    "lint": "eslint './**/*.{ts,tsx}' --max-warnings 0"
+    "lint": "eslint './**/*.{ts,tsx}' --fix"
   },
   "husky": {
     "hooks": {
@@ -19,7 +19,7 @@
   "lint-staged": {
     "./**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
       "prettier --write",
-      "yarn lint"
+      "npm run lint"
     ]
   },
   "eslintConfig": {
