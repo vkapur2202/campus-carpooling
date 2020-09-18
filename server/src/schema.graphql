@@ -21,10 +21,12 @@ type Mutation {
   activateAccount: SuccessMessage
   confirmAccount(token: String!): User!
   setProfile(year: String!, gender: String!, can_drive: Boolean!, max_capacity: Int!): User!
+  updateProfile(year: String, gender: String, can_drive: Boolean, max_capacity: Int): SuccessMessage
   resetRequest(email: String!): SuccessMessage
   resetPassword(token: String!, password: String!): User!
-  createEvent(max_participants: Int!, start_location: String!, end_location: String!, event_date: DateTime!): Event!
-  deleteEvent(event_date: DateTime!): SuccessMessage
+  createEvent(name: String, max_participants: Int!, start_location: String!, end_location: String!, event_date: DateTime!): Event!
+  deleteEvent(name: String! event_date: DateTime!): SuccessMessage
+  updateEvent(name: String! max_participants: Int, start_location: String, end_location: String, event_date: DateTime!)
 }
 
 type User {
@@ -44,6 +46,7 @@ type User {
 
 type Event {
   id: ID!
+  name: String!
   max_participants: Int!
   start_location: String!
   end_location: String!

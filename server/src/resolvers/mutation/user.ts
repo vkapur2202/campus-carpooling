@@ -27,10 +27,30 @@ export const User = {
     })
 
     if (!updatedUser) {
-      throw new Error(`Error updating user with email: ${ctx.request.user.email}`)
+      throw new Error(`Error setting profile`)
     }
     return updatedUser
   },
+  async updateProfile(parent, { args }, ctx: Context): Promise<ISuccessMessage | Error> {
+    if (!ctx.request.userId) {
+      throw new AuthError()
+    }
+    const updatedUser: UserType = await ctx.prisma.user.update({
+      where: {
+        id: ctx.request.userId,
+      },
+      data: {
+        ...args,
+        updated_on: moment().toDate(),
+      },
+    })
+
+    if (!updatedUser) {
+      throw new Error(`Error updating user`)
+    }
+    return { message: `User has been updated!` }
+  },
+
   async activateAccount(parent, args, ctx: Context): Promise<ISuccessMessage | Error> {
     if (!ctx.request.userId) {
       throw new AuthError()
