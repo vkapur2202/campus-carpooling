@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS "user" (
 
 CREATE TABLE IF NOT EXISTS "event" (
   id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
   max_participants INTEGER NOT NULL,
   start_location VARCHAR(255) NOT NULL,
   end_location VARCHAR(255) NOT NULL,

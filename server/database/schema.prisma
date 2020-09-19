@@ -25,6 +25,7 @@ model user {
 
 model event {
   id               Int       @default(autoincrement()) @id
+  name             String
   max_participants Int
   start_location   String
   end_location     String

@@ -5,7 +5,11 @@ import { start } from 'repl'
 import { AuthError, Context, ISuccessMessage } from '../../utils'
 
 export const Event = {
-  async createEvent(parent, { args }, ctx: Context): Promise<EventType | Error> {
+  async createEvent(
+    parent,
+    { name, event_date, max_participants, start_location, end_location, new_date },
+    ctx: Context
+  ): Promise<EventType | Error> {
     if (!ctx.request.userId) {
       throw new AuthError()
     }
@@ -15,7 +19,7 @@ export const Event = {
       .findMany({
         where: {
           user: user,
-          event_date: args.event_date,
+          event_date: event_date,
         },
       })
       .then((resp) => resp[0])
@@ -32,7 +36,11 @@ export const Event = {
               id: user.id,
             },
           },
-          ...args,
+          name,
+          max_participants,
+          start_location,
+          end_location,
+          event_date: new_date,
         },
       })
       .catch(() => {

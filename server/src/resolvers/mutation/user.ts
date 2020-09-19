@@ -31,6 +31,7 @@ export const User = {
     }
     return updatedUser
   },
+
   async updateProfile(parent, { args }, ctx: Context): Promise<ISuccessMessage | Error> {
     if (!ctx.request.userId) {
       throw new AuthError()

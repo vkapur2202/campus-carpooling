@@ -76,6 +76,22 @@ export const PROFILE_MUTATION = gql`
   }
 `;
 
+export const GET_ALL_EVENTS_QUERY = gql`
+  query {
+    events{
+      user{
+        id
+        name
+      }
+      name
+      max_participants
+      start_location
+      end_location
+      event_date
+    }
+  }
+`;
+
 export const RESET_REQUEST_MUTATION = gql`
   mutation($email: String!) {
     resetRequest(email: $email) {
