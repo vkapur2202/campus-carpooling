@@ -12,9 +12,7 @@ function Home() {
   const { loading, error, data } = useQuery(GET_ALL_EVENTS_QUERY, {
     // put options here
   });
-  if (data) {
-    console.log(data)
-  }
+
   if (loading) return <p>Loading...</p>;
   if (error) return `${error}`;
 

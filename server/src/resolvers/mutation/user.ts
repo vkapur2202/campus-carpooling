@@ -120,7 +120,6 @@ export const User = {
     let uId
     try {
       uId = jwt.verify(token, config.APP_SECRET).userId
-      console.log(uId)
     } catch (e) {
       throw new Error('The password reset token is either invalid or expired.')
     }

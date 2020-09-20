@@ -26,7 +26,6 @@ type Mutation {
   resetPassword(token: String!, password: String!): User!
   createEvent(name: String!, max_participants: Int!, start_location: String!, end_location: String!, event_date: DateTime!): Event!
   deleteEvent(name: String! event_date: DateTime!): SuccessMessage
-  updateEvent(name: String, max_participants: Int, start_location: String, end_location: String, event_date: DateTime!, new_date: DateTime): SuccessMessage
 }
 
 type User {
