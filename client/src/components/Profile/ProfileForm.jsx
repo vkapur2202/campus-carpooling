@@ -36,8 +36,8 @@ function ProfileForm() {
       variables: {
         year: fields.year,
         gender: fields.gender,
-        can_drive: fields.can_drive == "true" ? true : false,
-        max_capacity: fields.can_drive == "true" ? parseInt(fields.max_capacity, 10) : 0,
+        can_drive: fields.can_drive === "true" ? true : false,
+        max_capacity: fields.can_drive === "true" ? parseInt(fields.max_capacity, 10) : 0,
       },
     };
     profile(profileInput)
@@ -115,7 +115,7 @@ function ProfileForm() {
             placeholder="Enter max capacity"
             onChange={handleInputChange}
             name="max_capacity"
-            readOnly={fields.can_drive == "false" ? true : false}
+            readOnly={fields.can_drive === "false" ? true : false}
           />
         </Form.Group>
         <Button variant="primary" type="submit">

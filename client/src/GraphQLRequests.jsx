@@ -76,6 +76,38 @@ export const PROFILE_MUTATION = gql`
   }
 `;
 
+export const GET_ALL_EVENTS_QUERY = gql`
+  query {
+    events{
+      user{
+        id
+        name
+      }
+      name
+      max_participants
+      start_location
+      end_location
+      event_date
+    }
+  }
+`;
+
+export const CREATE_EVENT_MUTATION = gql`
+  mutation($name: String!, $max_participants: Int!, $start_location: String!, $end_location: String!, $event_date: DateTime!) {
+    createEvent(name: $name, max_participants: $max_participants, start_location: $start_location, end_location: $end_location, event_date: $event_date){
+      user{
+        id
+        name
+      }
+      name
+      max_participants
+      start_location
+      end_location
+      event_date
+    }
+  }
+`;
+
 export const RESET_REQUEST_MUTATION = gql`
   mutation($email: String!) {
     resetRequest(email: $email) {

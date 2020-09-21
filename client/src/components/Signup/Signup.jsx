@@ -9,7 +9,7 @@ class Signup extends React.Component {
       <div>
         <div className="content">
           <div className="vertical-content">
-            <h1>Signup</h1>
+            <h1>Sign Up</h1>
             <SignupForm />
             <Link to="/login">Already have an account? Login here.</Link>
           </div>
