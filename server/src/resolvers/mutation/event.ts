@@ -5,11 +5,7 @@ import { start } from 'repl'
 import { AuthError, Context, ISuccessMessage } from '../../utils'
 
 export const Event = {
-  async createEvent(
-    parent,
-    { name, max_participants, start_location, end_location, event_date },
-    ctx: Context
-  ): Promise<EventType | Error> {
+  async createEvent(parent, { args }, ctx: Context): Promise<EventType | Error> {
     if (!ctx.request.userId) {
       throw new AuthError()
     }
@@ -19,7 +15,7 @@ export const Event = {
       .findMany({
         where: {
           user_id: user.id,
-          event_date: event_date,
+          event_date: args.event_date,
         },
       })
       .then((resp) => resp[0])
@@ -36,11 +32,7 @@ export const Event = {
               id: user.id,
             },
           },
-          name,
-          max_participants,
-          start_location,
-          end_location,
-          event_date,
+          ...args,
         },
       })
       .catch(() => {
@@ -78,5 +70,37 @@ export const Event = {
         throw new Error(`Error deleting event.`)
       })
     return { message: 'Event successfully deleted!' }
+  },
+
+  async updateEvent(parent, { args }, ctx: Context): Promise<EventType | Error> {
+    if (!ctx.request.userId) {
+      throw new AuthError()
+    }
+    const user: UserType = ctx.request.user
+
+    const event: EventType = await ctx.prisma.event
+      .findMany({
+        where: {
+          user_id: user.id,
+          event_date: args.event_date,
+        },
+      })
+      .then((resp) => resp[0])
+
+    if (!event) {
+      throw new Error('Event with this date and time cannot be found')
+    }
+
+    const updateEvent: EventType = await ctx.prisma.event
+      .update({
+        where: {
+          id: event.id,
+        },
+        data: args.data,
+      })
+      .catch(() => {
+        throw new Error(`Error creating new event.`)
+      })
+    return updateEvent
   },
 }
