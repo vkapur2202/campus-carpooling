@@ -10,7 +10,7 @@ function Events(props) {
   return (
     <>
       <div className="events">
-        <h1>Events</h1>
+        <h1>Active Events</h1>
         <Table hover>
           <thead>
             <tr>
