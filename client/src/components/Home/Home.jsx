@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_ALL_EVENTS_QUERY } from "../../GraphQLRequests";
-import Events from "../Events/Events";
+import ActiveEvents from "../Events/ActiveEvents";
+import InactiveEvents from "../Events/InactiveEvents";
 import { Context } from "../Store/Store";
 import { Redirect } from "react-router";
 
@@ -13,14 +14,11 @@ function Home() {
     // put options here
   });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return `${error}`;
-
   return (
     <div>
       <div className="content">
         {!state.loggedIn && (
-          < div className="vertical-content">
+          <div className="vertical-content">
             <h1>Home</h1>
             <p>Welcome to the Home page!</p>
             <p>Sign up or login to get started!</p>
@@ -32,11 +30,12 @@ function Home() {
             </Button>
           </div>
         )}
-        {state.loggedIn && (
-          <Events events={data.events} />
-        )}
+        <div className="center-row">
+          {state.loggedIn && <ActiveEvents events={data.activeEvents} />}
+          {state.loggedIn && <InactiveEvents events={data.inactiveEvents} />}
+        </div>
       </div>
-    </div >
+    </div>
   );
 }
 
