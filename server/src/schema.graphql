@@ -36,7 +36,7 @@ type Mutation {
     max_participants: Int
     start_location: String
     end_location: String
-    event_date: DateTime
+    event_date: DateTime!
   ): SuccessMessage
   deleteEvent(name: String!, event_date: DateTime!): SuccessMessage
 }
