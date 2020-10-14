@@ -8,31 +8,42 @@ datasource db {
 }
 
 model user {
-  id           Int       @default(autoincrement()) @id
+  id           Int            @default(autoincrement()) @id
   name         String
-  email        String    @unique
+  email        String         @unique
   password     String
   year         String?
   gender       String?
-  can_drive    Boolean?  @default(false)
-  max_capacity Int?      @default(0)
-  created_on   DateTime? @default(now())
-  updated_on   DateTime? @default(now())
+  can_drive    Boolean?       @default(false)
+  max_capacity Int?           @default(0)
+  created_on   DateTime?      @default(now())
+  updated_on   DateTime?      @default(now())
   confirmed_on DateTime?
-  confirmed    Boolean?  @default(false)
+  confirmed    Boolean?       @default(false)
   event        event[]
+  registration registration[]
 }
 
 model event {
-  id               Int       @default(autoincrement()) @id
+  id               Int            @default(autoincrement()) @id
   name             String
   max_participants Int
   start_location   String
   end_location     String
   event_date       DateTime
-  is_active        Boolean?  @default(true)
-  created_on       DateTime? @default(now())
-  updated_on       DateTime? @default(now())
+  is_active        Boolean?       @default(true)
+  created_on       DateTime?      @default(now())
+  updated_on       DateTime?      @default(now())
   user_id          Int
-  user             user      @relation(fields: [user_id], references: [id])
+  user             user           @relation(fields: [user_id], references: [id])
+  registration     registration[]
+}
+
+model registration {
+  user_id  Int
+  event_id Int
+  event    event @relation(fields: [event_id], references: [id])
+  user     user  @relation(fields: [user_id], references: [id])
+
+  @@id([user_id, event_id])
 }

@@ -96,7 +96,10 @@ export const Event = {
         where: {
           id: event.id,
         },
-        data: args.data,
+        data: {
+          ...args,
+          updated_on: moment().toDate(),
+        },
       })
       .catch(() => {
         throw new Error(`Error creating new event.`)

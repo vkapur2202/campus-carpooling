@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS "user" CASCADE;
 DROP TABLE IF EXISTS "event" CASCADE;
+DROP TABLE IF EXISTS "registration" CASCADE;
 
 CREATE TABLE IF NOT EXISTS "user" (
   id SERIAL PRIMARY KEY,
@@ -27,4 +28,10 @@ CREATE TABLE IF NOT EXISTS "event" (
   created_on TIMESTAMP DEFAULT NOW(),  
   updated_on TIMESTAMP DEFAULT NOW(),  
   user_id INTEGER NOT NULL REFERENCES "user"
+);
+
+CREATE TABLE IF NOT EXISTS "registration" (
+  user_id INTEGER NOT NULL REFERENCES "user",
+  event_id INTEGER NOT NULL REFERENCES "event",
+  CONSTRAINT registration_id PRIMARY KEY(user_id,event_id)
 );
