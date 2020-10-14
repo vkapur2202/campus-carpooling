@@ -76,7 +76,7 @@ export const PROFILE_MUTATION = gql`
   }
 `;
 
-export const GET_ALL_ACTIVE_EVENTS_QUERY = gql`
+export const GET_ALL_EVENTS_QUERY = gql`
   query {
     activeEvents {
       user {
@@ -89,11 +89,6 @@ export const GET_ALL_ACTIVE_EVENTS_QUERY = gql`
       end_location
       event_date
     }
-  }
-`;
-
-export const GET_ALL_INACTIVE_EVENTS_QUERY = gql`
-  query {
     inactiveEvents {
       user {
         id

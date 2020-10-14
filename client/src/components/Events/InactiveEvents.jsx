@@ -9,8 +9,8 @@ function Events(props) {
 
   return (
     <>
-      <div className="events">
-        <h1>Active Events</h1>
+      <div className="inactiveEvents">
+        <h2>Inactive Events</h2>
         <Table hover>
           <thead>
             <tr>
@@ -18,7 +18,7 @@ function Events(props) {
               <th>Max Participants</th>
               <th>Start Location</th>
               <th>End Location</th>
-              <th>Date and Time</th>
+              <th>Proposed Date and Time</th>
               <th>Event Host</th>
             </tr>
           </thead>
@@ -42,7 +42,7 @@ function Events(props) {
                     variant="link"
                     onClick={() => setShow(true)}
                   >
-                    Register
+                    Pre-Register
                   </Button>
                 </td>
               </tr>
@@ -53,7 +53,7 @@ function Events(props) {
 
       <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Register</Modal.Title>
+          <Modal.Title>Pre-Register</Modal.Title>
         </Modal.Header>
         <Modal.Body>Show details here</Modal.Body>
         <Modal.Footer>
