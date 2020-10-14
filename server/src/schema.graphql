@@ -31,7 +31,6 @@ type Mutation {
     end_location: String!
     event_date: DateTime!
   ): Event!
-  deleteEvent(name: String!, event_date: DateTime!): SuccessMessage
   updateEvent(
     name: String
     max_participants: Int
@@ -39,6 +38,7 @@ type Mutation {
     end_location: String
     event_date: DateTime!
   ): SuccessMessage
+  deleteEvent(name: String!, event_date: DateTime!): SuccessMessage
 }
 
 type User {

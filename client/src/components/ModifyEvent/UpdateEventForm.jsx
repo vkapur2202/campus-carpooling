@@ -2,21 +2,21 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Alert } from "react-bootstrap";
-import { CREATE_EVENT_MUTATION } from "../../GraphQLRequests";
+import { UPDATE_EVENT_MUTATION } from "../../GraphQLRequests";
 import { useMutation } from "@apollo/react-hooks";
 import { Redirect } from "react-router";
 
-function CreateEventForm() {
+function UpdateEventForm() {
   const initialFields = {};
   const [fields, setFields] = useState(initialFields);
-  const [createdEventVariable, setCreatedEventVariable] = useState({
-    hasCreatedEvent: false,
+  const [updatedEventVariable, setUpdatedEventVariable] = useState({
+    hasupdatedEvent: false,
   });
 
-  const [createEvent] = useMutation(CREATE_EVENT_MUTATION, {
+  const [updateEvent] = useMutation(UPDATE_EVENT_MUTATION, {
     errorPolicy: "all",
   });
-  const [createEventError, setCreateEventError] = useState("");
+  const [updateEventError, setUpdateEventError] = useState("");
 
   const handleInputChange = (event) => {
     const target = event.target;
@@ -31,7 +31,7 @@ function CreateEventForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const createEventInput = {
+    const updateEventInput = {
       variables: {
         name: fields.name,
         max_participants: parseInt(fields.max_participants),
@@ -40,21 +40,22 @@ function CreateEventForm() {
         event_date: new Date(fields.event_date),
       },
     };
-    createEvent(createEventInput)
+    updateEvent(updateEventInput)
       .then((resp) => {
-        setCreatedEventVariable({
-          hasCreatedEvent: true,
+        setUpdatedEventVariable({
+          hasUpdatedEvent: true,
         });
       })
-      .catch((err) => setCreateEventError(err.message));
+      .catch((err) => setUpdateEventError(err.message));
+    console.log(updateEventInput);
   };
 
-  const { hasCreatedEvent } = createdEventVariable;
-  if (hasCreatedEvent) return <Redirect to="/" />;
+  const { hasUpdatedEvent } = updatedEventVariable;
+  if (hasUpdatedEvent) return <Redirect to="/" />;
   return (
     <div>
-      {createEventError ? (
-        <Alert variant="danger">{createEventError}</Alert>
+      {updateEventError ? (
+        <Alert variant="danger">{updateEventError}</Alert>
       ) : undefined}
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="eventNameGroup">
@@ -110,4 +111,4 @@ function CreateEventForm() {
   );
 }
 
-export default CreateEventForm;
+export default updateEventForm;
