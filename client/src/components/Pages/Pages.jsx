@@ -11,6 +11,7 @@ import UserConfirmation from "../UserConfirmation/UserConfirmation";
 import ResetRequest from "../ResetPassword/ResetRequest";
 import ResetPassword from "../ResetPassword/ResetPassword";
 import CreateEvent from "../CreateEvent/CreateEvent";
+import UserEvents from "../UserEvents/UserEvents";
 
 function Pages() {
   return (
@@ -19,6 +20,7 @@ function Pages() {
       <Route path="/about" component={About} />
       <Route path="/profile" component={Profile} />
       <Route path="/create_event" component={CreateEvent} />
+      <Route path="/your_events" component={UserEvents} />
       <Route path="/signup" component={Signup} />
       <Route path="/login" component={Login} />
       <Route path="/reset_request" component={ResetRequest} />

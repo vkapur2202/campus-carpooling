@@ -103,6 +103,35 @@ export const GET_ALL_EVENTS_QUERY = gql`
   }
 `;
 
+export const GET_ALL_USER_EVENTS_QUERY = gql`
+  query($id: ID!){
+    user(id: $id){
+      active_events {
+        user {
+          id
+          name
+        }
+        name
+        max_participants
+        start_location
+        end_location
+        event_date
+      }
+      inactive_events {
+        user {
+          id
+          name
+        }
+        name
+        max_participants
+        start_location
+        end_location
+        event_date
+      }
+    }
+  }
+`;
+
 export const CREATE_EVENT_MUTATION = gql`
   mutation(
     $name: String!
