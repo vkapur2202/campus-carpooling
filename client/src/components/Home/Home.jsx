@@ -14,6 +14,8 @@ function Home() {
     // put options here
   });
 
+  if (loading) return <p>Loading...</p>;
+  if (error) return `${error}`;
   return (
     <div>
       <div className="content">

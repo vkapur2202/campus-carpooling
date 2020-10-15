@@ -33,10 +33,10 @@ function ProfileLink() {
   );
 }
 
-function CreateEventLink() {
+function UserEventLink() {
   return (
     <div className="navbar-right-item">
-      <Link to="/create_event">Create Event</Link>
+      <Link to="/your_events">Your Events</Link>
     </div>
   );
 }
@@ -71,7 +71,7 @@ function Nav() {
         <AboutLink />
         {state.loggedIn && (
           <>
-            <CreateEventLink />
+            <UserEventLink />
             <ProfileLink />
             <LogoutLink />
           </>
