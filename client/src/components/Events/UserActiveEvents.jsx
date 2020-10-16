@@ -16,7 +16,6 @@ function Events(props) {
         <Table hover>
           <thead>
             <tr>
-              <th>Event ID</th>
               <th>Event Name</th>
               <th>Max Participants</th>
               <th>Start Location</th>
@@ -31,7 +30,6 @@ function Events(props) {
           {props.events.map((event, i) => (
             <tbody key={i}>
               <tr>
-                <td>{event.id}</td>
                 <td>{event.name}</td>
                 <td>{event.max_participants}</td>
                 <td>{event.start_location}</td>

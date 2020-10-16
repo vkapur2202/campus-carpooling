@@ -2,12 +2,14 @@ import React from "react";
 import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import UpdateUserEvent from "../UpdateEvent/UpdateEvent"
 import { useState } from "react";
 
 function Events(props) {
   const [updateShow, setUpdateShow] = useState(false);
   const [templateShow, setTemplateShow] = useState(false);
   const [deleteShow, setDeleteShow] = useState(false);
+  const [event, setEvent] = useState();
   return (
     <>
       <div className="inactiveEvents">
@@ -44,7 +46,11 @@ function Events(props) {
                       color: "blue",
                     }}
                     variant="link"
-                    onClick={() => setUpdateShow(true)}
+                    onClick={() => {
+                      setUpdateShow(true);
+                      setEvent(event);
+                      }
+                    }
                   >
                     Update
                   </Button>
@@ -85,7 +91,9 @@ function Events(props) {
         <Modal.Header closeButton>
           <Modal.Title>Update</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Show details here</Modal.Body>
+        <Modal.Body>
+          <UpdateUserEvent event={event}/>
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={() => setUpdateShow(false)}>
             Cancel

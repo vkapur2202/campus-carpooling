@@ -21,12 +21,12 @@ function UserEvents() {
     <div>
       <div className="content">
         <div className="center-row">
-            <h1>Your Events</h1>
-                <Button variant="primary" size="lg">
-                <Link to="/create_event">Create New Event</Link>
-                </Button>
-                <UserActiveEvents events={data.user.active_events} />
-                <UserInactiveEvents events={data.user.inactive_events} />
+          <h1>Your Events</h1>
+            <Button variant="primary" size="lg">
+              <Link to="/create_event">Create New Event</Link>
+            </Button>
+            <UserActiveEvents events={data.user.active_events} />
+            <UserInactiveEvents events={data.user.inactive_events} />
         </div> 
       </div>
     </div>
