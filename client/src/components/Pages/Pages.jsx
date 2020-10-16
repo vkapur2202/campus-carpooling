@@ -12,6 +12,7 @@ import ResetRequest from "../ResetPassword/ResetRequest";
 import ResetPassword from "../ResetPassword/ResetPassword";
 import CreateEvent from "../CreateEvent/CreateEvent";
 import UserEvents from "../UserEvents/UserEvents";
+import UpdateEvent from "../UpdateEvent/UpdateEvent";
 
 function Pages() {
   return (
@@ -20,6 +21,7 @@ function Pages() {
       <Route path="/about" component={About} />
       <Route path="/profile" component={Profile} />
       <Route path="/create_event" component={CreateEvent} />
+      <Route path="/update_event" component={UpdateEvent} />
       <Route path="/your_events" component={UserEvents} />
       <Route path="/signup" component={Signup} />
       <Route path="/login" component={Login} />
