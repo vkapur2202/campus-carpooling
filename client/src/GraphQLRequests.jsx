@@ -83,6 +83,7 @@ export const GET_ALL_EVENTS_QUERY = gql`
         id
         name
       }
+      id
       name
       max_participants
       start_location
@@ -94,6 +95,7 @@ export const GET_ALL_EVENTS_QUERY = gql`
         id
         name
       }
+      id
       name
       max_participants
       start_location
@@ -111,6 +113,7 @@ export const GET_ALL_USER_EVENTS_QUERY = gql`
           id
           name
         }
+        id
         name
         max_participants
         start_location
@@ -122,12 +125,25 @@ export const GET_ALL_USER_EVENTS_QUERY = gql`
           id
           name
         }
+        id
         name
         max_participants
         start_location
         end_location
         event_date
       }
+    }
+  }
+`;
+
+export const GET_EVENT_QUERY = gql`
+  query($id: ID!){
+    event(id: $id){
+      name
+      max_participants
+      start_location
+      end_location
+      event_date
     }
   }
 `;
@@ -156,6 +172,28 @@ export const CREATE_EVENT_MUTATION = gql`
       start_location
       end_location
       event_date
+    }
+  }
+`;
+
+export const UPDATE_EVENT_MUTATION = gql`
+  mutation(
+    $id: Int!
+    $name: String!
+    $max_participants: Int!
+    $start_location: String!
+    $end_location: String!
+    $event_date: DateTime!
+  ) {
+    updateEvent(
+      id: $id
+      name: $name
+      max_participants: $max_participants
+      start_location: $start_location
+      end_location: $end_location
+      event_date: $event_date
+    ) {
+      message
     }
   }
 `;
