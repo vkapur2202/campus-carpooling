@@ -178,7 +178,7 @@ export const CREATE_EVENT_MUTATION = gql`
 
 export const UPDATE_EVENT_MUTATION = gql`
   mutation(
-    $id: ID!
+    $id: Int!
     $name: String!
     $max_participants: Int!
     $start_location: String!

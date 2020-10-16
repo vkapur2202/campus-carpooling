@@ -32,7 +32,7 @@ type Mutation {
     event_date: DateTime!
   ): Event!
   updateEvent(
-    id: ID!
+    id: Int!
     name: String
     max_participants: Int
     start_location: String

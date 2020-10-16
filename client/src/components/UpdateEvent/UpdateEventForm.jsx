@@ -40,6 +40,7 @@ function UpdateEventForm(event) {
     event.preventDefault();
     const updateEventInput = {
       variables: {
+        id: parseInt(initialEvent.id),
         name: fields.name,
         max_participants: parseInt(fields.max_participants),
         start_location: fields.start_location,
