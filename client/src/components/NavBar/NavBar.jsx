@@ -11,7 +11,7 @@ function Logo() {
   return (
     <Link to="/">
       <img src={reversedlogo} />
-      Campus Carpooling
+      CampusLive
       <img src={logo} />
     </Link>
   );
