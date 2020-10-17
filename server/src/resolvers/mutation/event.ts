@@ -1,4 +1,4 @@
-import { event as EventType, user as UserType } from '@prisma/client'
+import { event as EventType, registration as RegistrationType,user as UserType } from '@prisma/client'
 import * as moment from 'moment'
 import { start } from 'repl'
 
@@ -107,5 +107,43 @@ export const Event = {
         throw new Error(`Error updating event.`)
       })
     return updateEvent
+  },
+
+  async register(parent, { event_id }, ctx: Context): Promise<RegistrationType | Error> {
+    if (!ctx.request.userId) {
+      throw new AuthError()
+    }
+
+    const user: UserType = ctx.request.user
+
+    const event: EventType = await ctx.prisma.event.findOne({
+      where: {
+        id: event_id,
+      },
+    })
+
+    if (!event) {
+      throw new Error(`Event could not be found`)
+    }
+
+    const register: RegistrationType = await ctx.prisma.registration
+      .create({
+        data: {
+          user: {
+            connect: {
+              id: user.id,
+            },
+          },
+          event: {
+            connect: {
+              id: event.id,
+            },
+          },
+        },
+      })
+      .catch(() => {
+        throw new Error(`Error updating event.`)
+      })
+    return register
   },
 }

@@ -31,7 +31,8 @@ CREATE TABLE IF NOT EXISTS "event" (
 );
 
 CREATE TABLE IF NOT EXISTS "registration" (
+  id SERIAL PRIMARY KEY,
   user_id INTEGER NOT NULL REFERENCES "user",
   event_id INTEGER NOT NULL REFERENCES "event",
-  CONSTRAINT registration_id PRIMARY KEY(user_id,event_id)
+  UNIQUE (user_id,event_id)
 );
