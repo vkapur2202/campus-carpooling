@@ -1,4 +1,5 @@
 import { Context } from '../utils'
+import { Registration } from './query/registration'
 
 export const Query = {
   me(parent, args, ctx: Context) {
@@ -16,32 +17,45 @@ export const Query = {
   },
   event(parent, { id }, ctx: Context) {
     id = parseInt(id)
-    return ctx.prisma.event.findOne(
-      {
-        where: { id }
-      }
-    )
+    return ctx.prisma.event.findOne({
+      where: { id },
+    })
   },
   activeEvents(parent, args, ctx: Context) {
-    return ctx.prisma.event.findMany(
-      {
-        where: {
-          is_active: true
-        }
-      }
-    )
+    return ctx.prisma.event.findMany({
+      where: {
+        is_active: true,
+      },
+    })
   },
   inactiveEvents(parent, args, ctx: Context) {
-    return ctx.prisma.event.findMany(
-      {
-        where: {
-          is_active: false
-        }
-      }
-    )
+    return ctx.prisma.event.findMany({
+      where: {
+        is_active: false,
+      },
+    })
   },
   events(parent, args, ctx: Context) {
     return ctx.prisma.event.findMany()
-  }
-}
+  },
 
+  registrations(parent, args, ctx: Context) {
+    return ctx.prisma.registration.findMany()
+  },
+
+  participants(parent, { id }, ctx: Context) {
+    return ctx.prisma.registration.findMany({
+      where: {
+        event_id: id,
+      },
+    })
+  },
+
+  userRegistrations(parent, { id }, ctx: Context) {
+    return ctx.prisma.registration.findMany({
+      where: {
+        user_id: id,
+      },
+    })
+  },
+}
