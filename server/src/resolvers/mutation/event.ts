@@ -54,7 +54,6 @@ export const Event = {
     if (!ctx.request.userId) {
       throw new AuthError()
     }
-    const user = ctx.request.user
 
     const eventToDelete: EventType = await ctx.prisma.event.findOne({
       where: {
@@ -86,10 +85,16 @@ export const Event = {
       throw new AuthError()
     }
 
+    const event: EventType = await ctx.prisma.event.findOne({
+      where: {
+        id: id,
+      },
+    })
+
     const updateEvent: EventType = await ctx.prisma.event
       .update({
         where: {
-          id,
+          id: event.id,
         },
         data: {
           name,
@@ -139,7 +144,7 @@ export const Event = {
         },
       })
       .catch(() => {
-        throw new Error(`Error updating event.`)
+        throw new Error(`Error registering for event.`)
       })
     return register
   },
