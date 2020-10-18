@@ -76,6 +76,7 @@ type Event {
 }
 
 type Registration {
+  id: ID!
   user_id: Int!
   event_id: Int!
   event: Event!
