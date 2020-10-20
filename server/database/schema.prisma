@@ -40,10 +40,11 @@ model event {
 }
 
 model registration {
+  id       Int   @default(autoincrement()) @id
   user_id  Int
   event_id Int
   event    event @relation(fields: [event_id], references: [id])
   user     user  @relation(fields: [user_id], references: [id])
 
-  @@id([user_id, event_id])
+  @@unique([user_id, event_id], name: "registration_user_id_event_id_key")
 }
