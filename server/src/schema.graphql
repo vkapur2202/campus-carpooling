@@ -12,6 +12,10 @@ type Query {
   activeEvents: [Event!]!
   inactiveEvents: [Event!]!
   events: [Event!]!
+  registration: Registration!
+  registrations: [Registration!]!
+  userRegistrations: [Registration!]!
+  participants: [Registration!]!
 }
 
 type Mutation {
@@ -39,7 +43,9 @@ type Mutation {
     end_location: String
     event_date: DateTime
   ): SuccessMessage
-  deleteEvent(name: String!, event_date: DateTime!): SuccessMessage
+  deleteEvent(event_id: Int!): SuccessMessage
+  register(event_id: Int!): Registration!
+  unregister(event_id: Int!): SuccessMessage
 }
 
 type User {
@@ -70,5 +76,13 @@ type Event {
   is_active: Boolean!
   created_on: DateTime!
   updated_on: DateTime!
+  user: User!
+}
+
+type Registration {
+  id: ID!
+  user_id: Int!
+  event_id: Int!
+  event: Event!
   user: User!
 }

@@ -1,4 +1,4 @@
-import { event as EventType, user as UserType } from '@prisma/client'
+import { event as EventType, registration as RegistrationType, user as UserType } from '@prisma/client'
 import * as moment from 'moment'
 import { start } from 'repl'
 
@@ -49,21 +49,17 @@ export const Event = {
     return newEvent
   },
 
-  async deleteEvent(parent, { event_date }, ctx: Context): Promise<ISuccessMessage | Error> {
+  async deleteEvent(parent, { event_id }, ctx: Context): Promise<ISuccessMessage | Error> {
     // assumes a user can't have multiple active events at the same time
     if (!ctx.request.userId) {
       throw new AuthError()
     }
-    const user = ctx.request.user
 
-    const eventToDelete: EventType = await ctx.prisma.event
-      .findMany({
-        where: {
-          user: user,
-          event_date,
-        },
-      })
-      .then((resp) => resp[0])
+    const eventToDelete: EventType = await ctx.prisma.event.findOne({
+      where: {
+        id: event_id,
+      },
+    })
 
     if (!eventToDelete) {
       throw new Error(`Event could not be found.`)
@@ -89,10 +85,16 @@ export const Event = {
       throw new AuthError()
     }
 
+    const event: EventType = await ctx.prisma.event.findOne({
+      where: {
+        id: id,
+      },
+    })
+
     const updateEvent: EventType = await ctx.prisma.event
       .update({
         where: {
-          id,
+          id: event.id,
         },
         data: {
           name,
@@ -107,5 +109,81 @@ export const Event = {
         throw new Error(`Error updating event.`)
       })
     return updateEvent
+  },
+
+  async register(parent, { event_id }, ctx: Context): Promise<RegistrationType | Error> {
+    if (!ctx.request.userId) {
+      throw new AuthError()
+    }
+
+    const user: UserType = ctx.request.user
+
+    const event: EventType = await ctx.prisma.event.findOne({
+      where: {
+        id: event_id,
+      },
+    })
+
+    if (!event) {
+      throw new Error(`Event could not be found`)
+    }
+
+    const register: RegistrationType = await ctx.prisma.registration
+      .create({
+        data: {
+          user: {
+            connect: {
+              id: user.id,
+            },
+          },
+          event: {
+            connect: {
+              id: event.id,
+            },
+          },
+        },
+      })
+      .catch(() => {
+        throw new Error(`Error registering for event.`)
+      })
+    return register
+  },
+
+  async unregister(parent, { event_id }, ctx: Context): Promise<ISuccessMessage | Error> {
+    if (!ctx.request.userId) {
+      throw new AuthError()
+    }
+
+    const user: UserType = ctx.request.user
+
+    const event: EventType = await ctx.prisma.event.findOne({
+      where: {
+        id: event_id,
+      },
+    })
+
+    if (!event) {
+      throw new Error(`Event could not be found`)
+    }
+
+    const registration: RegistrationType = await ctx.prisma.registration
+      .findMany({
+        where: {
+          event_id: event_id,
+          user_id: user.id,
+        },
+      })
+      .then((resp) => resp[0])
+
+    await ctx.prisma.registration
+      .delete({
+        where: {
+          id: registration.id,
+        },
+      })
+      .catch(() => {
+        throw new Error(`Error deleting registration.`)
+      })
+    return { message: 'Registration successfully deleted!' }
   },
 }
