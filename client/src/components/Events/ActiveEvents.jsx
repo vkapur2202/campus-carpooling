@@ -3,10 +3,11 @@ import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
+import Registration from "../Registration/Registration";
 
 function Events(props) {
   const [show, setShow] = useState(false);
-
+  const [event, setEvent] = useState();
   return (
     <>
       <div className="activeEvents">
@@ -40,7 +41,11 @@ function Events(props) {
                       color: "green",
                     }}
                     variant="link"
-                    onClick={() => setShow(true)}
+                    onClick={() => {
+                      setShow(true)
+                      setEvent(event)
+                    }
+                    }
                   >
                     Register
                   </Button>
@@ -55,7 +60,9 @@ function Events(props) {
         <Modal.Header closeButton>
           <Modal.Title>Register</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Show details here</Modal.Body>
+        <Modal.Body>
+          <Registration event={event} />
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={() => setShow(false)}>
             Cancel

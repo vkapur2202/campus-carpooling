@@ -215,3 +215,16 @@ export const RESET_PASSWORD_MUTATION = gql`
     }
   }
 `;
+
+export const REGISTER_MUTATION = gql`
+  mutation($event_id: Int!) {
+    register(event_id: $event_id){
+      event {
+        name
+        start_location
+        end_location
+        event_date
+      }
+    }
+  }
+`;
