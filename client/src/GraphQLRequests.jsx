@@ -198,6 +198,14 @@ export const UPDATE_EVENT_MUTATION = gql`
   }
 `;
 
+export const DELETE_EVENT_MUTATION = gql`
+  mutation($event_id: Int!){
+    deleteEvent(event_id: $event_id){
+      message
+    }
+  }
+  `;
+
 export const RESET_REQUEST_MUTATION = gql`
   mutation($email: String!) {
     resetRequest(email: $email) {
