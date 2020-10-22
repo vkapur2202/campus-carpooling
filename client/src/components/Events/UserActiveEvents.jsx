@@ -3,6 +3,7 @@ import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import UpdateUserEvent from "../UpdateEvent/UpdateEvent"
+import DeleteUserEvent from "../DeleteUserEvent/DeleteEvent"
 import { useState } from "react";
 
 function Events(props) {
@@ -49,7 +50,7 @@ function Events(props) {
                     onClick={() => {
                       setUpdateShow(true);
                       setEvent(event);
-                      }
+                    }
                     }
                   >
                     Update
@@ -63,7 +64,11 @@ function Events(props) {
                       color: "red",
                     }}
                     variant="link"
-                    onClick={() => setDeleteShow(true)}
+                    onClick={() => {
+                      setDeleteShow(true);
+                      setEvent(event);
+                    }
+                    }
                   >
                     Delete
                   </Button>
@@ -79,7 +84,7 @@ function Events(props) {
           <Modal.Title>Update</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <UpdateUserEvent event={event}/>
+          <UpdateUserEvent event={event} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={() => setUpdateShow(false)}>
@@ -91,7 +96,9 @@ function Events(props) {
         <Modal.Header closeButton>
           <Modal.Title>Delete</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Show details here</Modal.Body>
+        <Modal.Body>
+          <DeleteUserEvent event={event} />
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={() => setDeleteShow(false)}>
             Cancel
