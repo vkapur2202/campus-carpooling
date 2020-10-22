@@ -8,7 +8,7 @@ datasource db {
 }
 
 model user {
-  id           Int            @default(autoincrement()) @id
+  id           Int            @id @default(autoincrement())
   name         String
   email        String         @unique
   password     String
@@ -25,7 +25,7 @@ model user {
 }
 
 model event {
-  id               Int            @default(autoincrement()) @id
+  id               Int            @id @default(autoincrement())
   name             String
   max_participants Int
   start_location   String
@@ -40,7 +40,7 @@ model event {
 }
 
 model registration {
-  id       Int   @default(autoincrement()) @id
+  id       Int   @id @default(autoincrement())
   user_id  Int
   event_id Int
   event    event @relation(fields: [event_id], references: [id])

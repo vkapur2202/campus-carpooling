@@ -18,13 +18,14 @@ type Mutation {
   signup(email: String!, password: String!, name: String!): User!
   login(email: String!, password: String!): User!
   logout: SuccessMessage
-  activateAccount: SuccessMessage
+  activateAccount(userId: Int!): SuccessMessage
   confirmAccount(token: String!): User!
-  setProfile(year: String!, gender: String!, can_drive: Boolean!, max_capacity: Int!): User!
-  updateProfile(year: String, gender: String, can_drive: Boolean, max_capacity: Int): SuccessMessage
+  setProfile(userId: Int!, year: String!, gender: String!, can_drive: Boolean!, max_capacity: Int!): User!
+  updateProfile(userId: Int!, year: String, gender: String, can_drive: Boolean, max_capacity: Int): SuccessMessage
   resetRequest(email: String!): SuccessMessage
   resetPassword(token: String!, password: String!): User!
   createEvent(
+    userId: Int!
     name: String!
     max_participants: Int!
     start_location: String!
@@ -32,6 +33,7 @@ type Mutation {
     event_date: DateTime!
   ): Event!
   updateEvent(
+    userId: Int!
     id: Int!
     name: String
     max_participants: Int
@@ -39,7 +41,7 @@ type Mutation {
     end_location: String
     event_date: DateTime
   ): SuccessMessage
-  deleteEvent(name: String!, event_date: DateTime!): SuccessMessage
+  deleteEvent(userId: Int!, name: String!, event_date: DateTime!): SuccessMessage
 }
 
 type User {

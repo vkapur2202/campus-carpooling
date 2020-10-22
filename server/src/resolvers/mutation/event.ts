@@ -7,13 +7,23 @@ import { AuthError, Context, ISuccessMessage } from '../../utils'
 export const Event = {
   async createEvent(
     parent,
-    { name, max_participants, start_location, end_location, event_date },
+    { userId, name, max_participants, start_location, end_location, event_date },
     ctx: Context
   ): Promise<EventType | Error> {
-    if (!ctx.request.userId) {
+    // if (!ctx.request.userId) {
+    //   throw new AuthError()
+    // }
+    // const user: UserType = ctx.request.user
+
+    const user = await ctx.prisma.user.findOne({
+      where: {
+        id: userId,
+      },
+    })
+
+    if (!user) {
       throw new AuthError()
     }
-    const user: UserType = ctx.request.user
 
     const event: EventType = await ctx.prisma.event
       .findMany({
@@ -49,12 +59,22 @@ export const Event = {
     return newEvent
   },
 
-  async deleteEvent(parent, { event_date }, ctx: Context): Promise<ISuccessMessage | Error> {
+  async deleteEvent(parent, { userId, event_date }, ctx: Context): Promise<ISuccessMessage | Error> {
     // assumes a user can't have multiple active events at the same time
-    if (!ctx.request.userId) {
+    // if (!ctx.request.userId) {
+    //   throw new AuthError()
+    // }
+    // const user = ctx.request.user
+
+    const user = await ctx.prisma.user.findOne({
+      where: {
+        id: userId,
+      },
+    })
+
+    if (!user) {
       throw new AuthError()
     }
-    const user = ctx.request.user
 
     const eventToDelete: EventType = await ctx.prisma.event
       .findMany({
@@ -82,10 +102,20 @@ export const Event = {
 
   async updateEvent(
     parent,
-    { id, name, max_participants, start_location, end_location, event_date },
+    { userId, id, name, max_participants, start_location, end_location, event_date },
     ctx: Context
   ): Promise<EventType | Error> {
-    if (!ctx.request.userId) {
+    // if (!ctx.request.userId) {
+    //   throw new AuthError()
+    // }
+
+    const user = await ctx.prisma.user.findOne({
+      where: {
+        id: userId,
+      },
+    })
+
+    if (!user) {
       throw new AuthError()
     }
 

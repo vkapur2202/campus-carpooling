@@ -9,13 +9,19 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 export const User = {
-  async setProfile(parent, { year, gender, can_drive, max_capacity }, ctx: Context): Promise<UserType | Error> {
-    if (!ctx.request.userId) {
+  async setProfile(parent, { userId, year, gender, can_drive, max_capacity }, ctx: Context): Promise<UserType | Error> {
+    const user = await ctx.prisma.user.findOne({
+      where: {
+        id: userId,
+      },
+    })
+
+    if (!user) {
       throw new AuthError()
     }
     const updatedUser: UserType = await ctx.prisma.user.update({
       where: {
-        id: ctx.request.userId,
+        id: user.id,
       },
       data: {
         year: year,
@@ -32,16 +38,30 @@ export const User = {
     return updatedUser
   },
 
-  async updateProfile(parent, { args }, ctx: Context): Promise<ISuccessMessage | Error> {
-    if (!ctx.request.userId) {
+  async updateProfile(
+    parent,
+    { userId, year, gender, can_drive, max_capacity },
+    ctx: Context
+  ): Promise<ISuccessMessage | Error> {
+    const user = await ctx.prisma.user.findOne({
+      where: {
+        id: userId,
+      },
+    })
+
+    if (!user) {
       throw new AuthError()
     }
+
     const updatedUser: UserType = await ctx.prisma.user.update({
       where: {
-        id: ctx.request.userId,
+        id: user.id,
       },
       data: {
-        ...args,
+        year,
+        gender,
+        can_drive,
+        max_capacity,
         updated_on: moment().toDate(),
       },
     })
@@ -52,14 +72,22 @@ export const User = {
     return { message: `User has been updated!` }
   },
 
-  async activateAccount(parent, args, ctx: Context): Promise<ISuccessMessage | Error> {
-    if (!ctx.request.userId) {
+  async activateAccount(parent, { userId }, ctx: Context): Promise<ISuccessMessage | Error> {
+    const user = await ctx.prisma.user.findOne({
+      where: {
+        id: userId,
+      },
+    })
+
+    if (!user) {
       throw new AuthError()
     }
-    const token: string = jwt.sign({ userId: ctx.request.userId }, config.APP_SECRET, { expiresIn: '1h' })
+
+    const token: string = jwt.sign({ userId: user.id }, config.APP_SECRET, { expiresIn: '1h' })
+
     const sent = await transport.sendMail({
       from: config.MAIL_USER,
-      to: ctx.request.user.email,
+      to: user.email,
       subject: `${config.APP_NAME}: Confirm your account!`,
       html: activateAccountEmail(
         `<a href="${config.FRONTEND_URL}/confirm/${token}">Click here to confirm your account!</a>`
@@ -67,7 +95,7 @@ export const User = {
     })
 
     if (!sent) {
-      throw new Error(`Couldn't send email to ${ctx.request.user.email}`)
+      throw new Error(`Couldn't send email to ${user.email}`)
     }
 
     return { message: 'Confirmation email successfully sent!' }
