@@ -1,8 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { request } from 'graphql-request'
 
-import { main } from './seed'
-
 const host = 'http://localhost:4000'
 
 const bcrypt = require('bcryptjs')

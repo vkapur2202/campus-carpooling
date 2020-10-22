@@ -1,15 +1,5 @@
 import gql from "graphql-tag";
 
-export const CURRENT_USER_QUERY = gql`
-  query {
-    me {
-      id
-      email
-      name
-    }
-  }
-`;
-
 export const SIGNUP_MUTATION = gql`
   mutation($name: String!, $email: String!, $password: String!) {
     signup(name: $name, email: $email, password: $password) {
@@ -38,8 +28,8 @@ export const LOGOUT_MUTATION = gql`
 `;
 
 export const ACTIVATE_ACCOUNT_MUTATION = gql`
-  mutation {
-    activateAccount {
+  mutation($userId: Int!){
+    activateAccount(userId: $userId) {
       message
     }
   }
@@ -58,12 +48,14 @@ export const CONFIRM_ACCOUNT_MUTATION = gql`
 
 export const PROFILE_MUTATION = gql`
   mutation(
+    $userId: Int!
     $year: String!
     $gender: String!
     $can_drive: Boolean!
     $max_capacity: Int!
   ) {
     setProfile(
+      userId: $userId
       year: $year
       gender: $gender
       can_drive: $can_drive
