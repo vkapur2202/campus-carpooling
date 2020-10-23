@@ -11,22 +11,23 @@ export const User = {
     if (!ctx.request.userId) {
       throw new AuthError()
     }
-    const updatedUser: UserType = await ctx.prisma.user.update({
-      where: {
-        id: ctx.request.userId,
-      },
-      data: {
-        year: year,
-        gender: gender,
-        can_drive: can_drive,
-        max_capacity: max_capacity,
-        updated_on: moment().toDate(),
-      },
-    })
+    const updatedUser: UserType = await ctx.prisma.user
+      .update({
+        where: {
+          id: ctx.request.userId,
+        },
+        data: {
+          year: year,
+          gender: gender,
+          can_drive: can_drive,
+          max_capacity: max_capacity,
+          updated_on: moment().toDate(),
+        },
+      })
+      .catch(() => {
+        throw new Error(`Error updating user`)
+      })
 
-    if (!updatedUser) {
-      throw new Error(`Error setting profile`)
-    }
     return updatedUser
   },
 
@@ -34,19 +35,20 @@ export const User = {
     if (!ctx.request.userId) {
       throw new AuthError()
     }
-    const updatedUser: UserType = await ctx.prisma.user.update({
-      where: {
-        id: ctx.request.userId,
-      },
-      data: {
-        ...args,
-        updated_on: moment().toDate(),
-      },
-    })
+    await ctx.prisma.user
+      .update({
+        where: {
+          id: ctx.request.userId,
+        },
+        data: {
+          ...args,
+          updated_on: moment().toDate(),
+        },
+      })
+      .catch(() => {
+        throw new Error(`Error updating profile`)
+      })
 
-    if (!updatedUser) {
-      throw new Error(`Error updating user`)
-    }
-    return { message: `User has been updated!` }
+    return { message: `Profile has been updated!` }
   },
 }

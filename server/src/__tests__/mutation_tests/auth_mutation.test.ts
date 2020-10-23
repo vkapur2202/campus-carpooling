@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 
 import { Auth } from '../../resolvers/mutation/auth'
+import { AuthError } from '../../utils'
 
 require('sinon')
 const { mockRequest, mockResponse } = require('mock-req-res')
@@ -18,7 +19,7 @@ afterAll(async () => {
 
 describe('auth mutations', () => {
   it('signup', async () => {
-    const testUser = { name: 'Test Man', email: 'test@test.com', password: 'testpass' }
+    const testUser = { name: 'Test Man', email: 'test@example.com', password: 'testpass' }
     const req = mockRequest()
     const res = mockResponse()
     const signupResponse = await Auth.signup(
@@ -31,16 +32,31 @@ describe('auth mutations', () => {
       { prisma: prisma, request: req, response: res }
     )
 
-    console.log(signupResponse)
     const dbUser = await prisma.user.findOne({ where: { email: testUser.email } })
+
     expect(dbUser).toBeDefined()
-    expect(dbUser.name).toEqual(testUser.name)
-    expect(dbUser.email).toEqual(testUser.email)
-    expect(await bcrypt.compare(testUser.password, dbUser.password)).toEqual(true)
+    expect(signupResponse).toEqual(dbUser)
+  })
+
+  it('signupError', async () => {
+    const testUser = { name: 'Test Man', email: 'test@example.com', password: 'testpass' }
+    const req = mockRequest()
+    const res = mockResponse()
+    await expect(
+      Auth.signup(
+        null,
+        {
+          name: testUser.name,
+          email: testUser.email,
+          password: testUser.password,
+        },
+        { prisma: prisma, request: req, response: res }
+      )
+    ).rejects.toThrowError(`The email ${testUser.email} is already in use`)
 
     await prisma.user.delete({
       where: {
-        id: dbUser.id,
+        email: testUser.email,
       },
     })
   })
@@ -48,7 +64,7 @@ describe('auth mutations', () => {
   it('login', async () => {
     const req = mockRequest()
     const res = mockResponse()
-    const testUser = { name: 'Test Man', email: 'test@test.com', password: 'testpass' }
+    const testUser = { name: 'Test Man', email: 'test@example.com', password: 'testpass' }
 
     const user = await prisma.user.create({
       data: {
@@ -68,11 +84,55 @@ describe('auth mutations', () => {
     )
 
     const dbUser = await prisma.user.findOne({ where: { id: user.id } })
-    console.log(loginResponse)
+
+    expect(loginResponse).toEqual(dbUser)
 
     await prisma.user.delete({
       where: {
         id: dbUser.id,
+      },
+    })
+  })
+
+  it('loginEmailError', async () => {
+    const testUser = {
+      email: 'test@example.com',
+      password: 'testpass',
+    }
+    const req = mockRequest()
+    const res = mockResponse()
+    await expect(
+      Auth.login(
+        null,
+        { email: testUser.email, password: testUser.password },
+        { prisma: prisma, request: req, response: res }
+      )
+    ).rejects.toThrowError(`User with email '${testUser.email}' does not exist.`)
+  })
+
+  it('loginPasswordError', async () => {
+    const testUser = { name: 'Test Man', email: 'test@example.com', password: 'testpass', incorrectPassword: 'test' }
+
+    const user = await prisma.user.create({
+      data: {
+        name: testUser.name,
+        email: testUser.email,
+        password: await bcrypt.hash(testUser.password, 10),
+      },
+    })
+    const req = mockRequest()
+    const res = mockResponse()
+    await expect(
+      Auth.login(
+        null,
+        { email: testUser.email, password: testUser.incorrectPassword },
+        { prisma: prisma, request: req, response: res }
+      )
+    ).rejects.toThrowError('Invalid password.')
+
+    await prisma.user.delete({
+      where: {
+        id: user.id,
       },
     })
   })
@@ -86,17 +146,15 @@ describe('auth mutations', () => {
       maxAge: 1000 * 60 * 60, // 1 hour cookie
     })
     const logoutResponse = await Auth.logout(null, null, { prisma: prisma, request: req, response: res })
-    console.log(logoutResponse)
+
+    expect(logoutResponse).toEqual({ message: "You've successfully logged out. Bye!" })
   })
+
   it('resetRequest', async () => {
     const testUser = {
       name: 'Test Man',
-      email: 'test@test.com',
+      email: 'test@example.com',
       password: 'testpass',
-      year: 'Freshman',
-      gender: 'Woman',
-      can_drive: true,
-      max_capacity: 3,
     }
 
     const user = await prisma.user.create({
@@ -104,15 +162,10 @@ describe('auth mutations', () => {
         name: testUser.name,
         email: testUser.email,
         password: await bcrypt.hash(testUser.password, 10),
-        year: testUser.year,
-        gender: testUser.gender,
-        can_drive: testUser.can_drive,
-        max_capacity: testUser.max_capacity,
       },
     })
     const res = mockResponse()
-    const req = mockRequest({ userId: user.id })
-    const updatedUser = { password: 'testpass2' }
+    const req = mockRequest()
 
     const resetRequestResponse = await Auth.resetRequest(
       null,
@@ -122,17 +175,28 @@ describe('auth mutations', () => {
       { prisma: prisma, request: req, response: res }
     )
 
-    const dbUser = await prisma.user.findOne({ where: { id: user.id } })
+    expect(resetRequestResponse).toEqual({ message: 'Reset password email successfully sent!' })
 
     await prisma.user.delete({
       where: {
-        id: dbUser.id,
+        id: user.id,
       },
     })
   })
 
+  it('resetRequestError', async () => {
+    const testUser = {
+      email: 'test@example.com',
+    }
+    const req = mockRequest()
+    const res = mockResponse()
+    await expect(
+      Auth.resetRequest(null, { email: testUser.email }, { prisma: prisma, request: req, response: res })
+    ).rejects.toThrowError(`Can't find a user in our system with email: ${testUser.email}`)
+  })
+
   it('resetPassword', async () => {
-    const testUser = { name: 'Test Man', email: 'test@test.com', password: 'testpass' }
+    const testUser = { name: 'Test Man', email: 'test@example.com', password: 'testpass' }
 
     const user = await prisma.user.create({
       data: {
@@ -142,9 +206,8 @@ describe('auth mutations', () => {
       },
     })
     const res = mockResponse()
-    const req = mockRequest({ userId: user.id })
+    const req = mockRequest()
     const token: string = jwt.sign({ userId: user.id }, process.env.APP_SECRET, { expiresIn: '1h' })
-
     const updatedUser = { password: 'testpass2' }
 
     const resetPasswordResponse = await Auth.resetPassword(
@@ -159,6 +222,7 @@ describe('auth mutations', () => {
     const dbUser = await prisma.user.findOne({ where: { id: user.id } })
 
     expect(await bcrypt.compare(updatedUser.password, dbUser.password)).toEqual(true)
+    expect(resetPasswordResponse).toEqual(dbUser)
 
     await prisma.user.delete({
       where: {
@@ -168,7 +232,7 @@ describe('auth mutations', () => {
   })
 
   it('activateAccount', async () => {
-    const testUser = { name: 'Test Man', email: 'test@test.com', password: 'testpass' }
+    const testUser = { name: 'Test Man', email: 'test@example.com', password: 'testpass' }
 
     const user = await prisma.user.create({
       data: {
@@ -185,7 +249,7 @@ describe('auth mutations', () => {
       { args: null },
       { prisma: prisma, request: req, response: res }
     )
-    console.log(activateAccountResponse)
+
     expect(activateAccountResponse).toEqual({ message: 'Confirmation email successfully sent!' })
 
     await prisma.user.delete({
@@ -195,8 +259,17 @@ describe('auth mutations', () => {
     })
   })
 
+  it('activateAccountAuthError', async () => {
+    const res = mockResponse()
+    const req = mockRequest()
+
+    await expect(
+      Auth.activateAccount(null, { args: null }, { prisma: prisma, request: req, response: res })
+    ).rejects.toThrowError(new AuthError())
+  })
+
   it('confirmAccount', async () => {
-    const testUser = { name: 'Test Man', email: 'test@test.com', password: 'testpass' }
+    const testUser = { name: 'Test Man', email: 'test@example.com', password: 'testpass' }
 
     const user = await prisma.user.create({
       data: {
@@ -206,7 +279,7 @@ describe('auth mutations', () => {
       },
     })
     const res = mockResponse()
-    const req = mockRequest({ userId: user.id })
+    const req = mockRequest()
     const token: string = jwt.sign({ userId: user.id }, process.env.APP_SECRET, { expiresIn: '1h' })
     const confirmAccountResponse = await Auth.confirmAccount(
       null,
@@ -219,6 +292,8 @@ describe('auth mutations', () => {
         id: user.id,
       },
     })
+
+    expect(dbUser.confirmed).toEqual(true)
     expect(confirmAccountResponse).toEqual(dbUser)
 
     await prisma.user.delete({

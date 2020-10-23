@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 
 import { Query } from '../../resolvers/query'
+import { Event } from '../../resolvers/query/event'
 
 require('sinon')
 const { mockRequest, mockResponse } = require('mock-req-res')
@@ -17,10 +18,66 @@ afterAll(async () => {
 })
 
 describe('event queries', () => {
+  it('eventUser', async () => {
+    const testUser = {
+      name: 'Test Man',
+      email: 'test@example.com',
+      password: 'testpass',
+    }
+
+    const user = await prisma.user.create({
+      data: {
+        name: testUser.name,
+        email: testUser.email,
+        password: await bcrypt.hash(testUser.password, 10),
+      },
+    })
+
+    const testEvent = {
+      name: 'Test Event',
+      max_participants: 4,
+      start_location: 'Test Start',
+      end_location: 'Test End',
+      event_date: new Date(2020, 9, 27, 18, 30, 0, 0),
+    }
+
+    const event = await prisma.event.create({
+      data: {
+        user: {
+          connect: {
+            id: user.id,
+          },
+        },
+        name: testEvent.name,
+        max_participants: testEvent.max_participants,
+        start_location: testEvent.start_location,
+        end_location: testEvent.end_location,
+        event_date: testEvent.event_date,
+      },
+    })
+
+    const res = mockResponse()
+    const req = mockRequest()
+    const eventUserResponse = await Event.user(event, null, { prisma: prisma, request: req, response: res })
+
+    expect(eventUserResponse).toEqual(user)
+    await prisma.event.delete({
+      where: {
+        id: event.id,
+      },
+    })
+
+    await prisma.user.delete({
+      where: {
+        id: user.id,
+      },
+    })
+  })
+
   it('event', async () => {
     const testUser = {
       name: 'Test Man',
-      email: 'test@test.com',
+      email: 'test@example.com',
       password: 'testpass',
     }
 
@@ -83,7 +140,7 @@ describe('event queries', () => {
   it('events', async () => {
     const testUser = {
       name: 'Test Man',
-      email: 'test@test.com',
+      email: 'test@example.com',
       password: 'testpass',
     }
 
@@ -170,7 +227,7 @@ describe('event queries', () => {
   it('activeEvents', async () => {
     const testUser = {
       name: 'Test Man',
-      email: 'test@test.com',
+      email: 'test@example.com',
       password: 'testpass',
     }
 
@@ -265,7 +322,7 @@ describe('event queries', () => {
   it('inactiveEvents', async () => {
     const testUser = {
       name: 'Test Man',
-      email: 'test@test.com',
+      email: 'test@example.com',
       password: 'testpass',
     }
 

@@ -16,8 +16,6 @@ function UserRegistrations() {
   if (loading) return <p>Loading...</p>;
   if (error) return `${error}`;
 
-  console.log("DATA", data);
-
   return (
     <div>
       <div className="content">

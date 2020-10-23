@@ -13,6 +13,16 @@ export const Auth = {
     const email: string = args.email.toLowerCase()
     const password: string = await bcrypt.hash(args.password, 10)
 
+    const user = await ctx.prisma.user.findOne({
+      where: {
+        email: args.email,
+      },
+    })
+
+    if (user) {
+      throw new Error(`The email ${email} is already in use`)
+    }
+
     const newUser: UserType = await ctx.prisma.user
       .create({
         data: {
@@ -63,22 +73,32 @@ export const Auth = {
   },
 
   async confirmAccount(parent, { token }, ctx: Context): Promise<UserType | Error> {
-    const { userId } = jwt.verify(token, config.APP_SECRET)
+    const userId = jwt.verify(token, config.APP_SECRET).userId
 
-    if (!userId) {
-      throw new Error('The token is either invalid or expired.')
-    }
-
-    const updatedUser: UserType = await ctx.prisma.user.update({
+    const user = await ctx.prisma.user.findOne({
       where: {
         id: userId,
       },
-      data: {
-        confirmed: true,
-        confirmed_on: moment().toDate(),
-        updated_on: moment().toDate(), // TODO: make POSTGRES trigger to do this
-      },
     })
+
+    if (!user) {
+      throw new Error(`The token is either invalid or expired.`)
+    }
+
+    const updatedUser: UserType = await ctx.prisma.user
+      .update({
+        where: {
+          id: userId,
+        },
+        data: {
+          confirmed: true,
+          confirmed_on: moment().toDate(),
+          updated_on: moment().toDate(), // TODO: make POSTGRES trigger to do this
+        },
+      })
+      .catch(() => {
+        throw new Error(`Error confirming account.`)
+      })
     return updatedUser
   },
 
@@ -106,23 +126,32 @@ export const Auth = {
   },
 
   async resetPassword(parent, { token, password }, ctx: Context): Promise<UserType | Error> {
-    let uId
-    try {
-      uId = jwt.verify(token, config.APP_SECRET).userId
-    } catch (e) {
-      throw new Error('The password reset token is either invalid or expired.')
+    const userId = jwt.verify(token, config.APP_SECRET).userId
+
+    const user = await ctx.prisma.user.findOne({
+      where: {
+        id: userId,
+      },
+    })
+
+    if (!user) {
+      throw new Error(`The token is either invalid or expired.`)
     }
 
     const newPassword: string = await bcrypt.hash(password, 10)
-    const updatedUser: UserType = await ctx.prisma.user.update({
-      where: {
-        id: uId,
-      },
-      data: {
-        password: newPassword,
-        updated_on: moment().toDate(), // TODO: make POSTGRES trigger to do this
-      },
-    })
+    const updatedUser: UserType = await ctx.prisma.user
+      .update({
+        where: {
+          id: userId,
+        },
+        data: {
+          password: newPassword,
+          updated_on: moment().toDate(), // TODO: make POSTGRES trigger to do this
+        },
+      })
+      .catch(() => {
+        throw new Error(`Error resetting password.`)
+      })
     return updatedUser
   },
 

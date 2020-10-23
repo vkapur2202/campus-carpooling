@@ -18,7 +18,7 @@ module.exports = {
       },
     ],
   ],
-  collectCoverageFrom: ['src/resolvers/**/*.{js,jsx,ts,tsx}', '!src/resolvers/query/*'],
+  collectCoverageFrom: ['src/resolvers/**/*.{js,jsx,ts,tsx}', '!src/resolvers/index.ts', '!src/resolvers/mutation.ts'],
   coverageThreshold: {
     global: {
       statements: 80,

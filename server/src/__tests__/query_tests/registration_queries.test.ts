@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 
 import { Query } from '../../resolvers/query'
+import { Registration } from '../../resolvers/query/registration'
 
 require('sinon')
 const { mockRequest, mockResponse } = require('mock-req-res')
@@ -20,7 +21,7 @@ describe('registration queries', () => {
   it('registration', async () => {
     const testUser = {
       name: 'Test Man',
-      email: 'test@test.com',
+      email: 'test@example.com',
       password: 'testpass',
     }
 
@@ -105,10 +106,174 @@ describe('registration queries', () => {
     })
   })
 
+  it('registrationEvent', async () => {
+    const testUser = {
+      name: 'Test Man',
+      email: 'test@example.com',
+      password: 'testpass',
+    }
+
+    const user = await prisma.user.create({
+      data: {
+        name: testUser.name,
+        email: testUser.email,
+        password: await bcrypt.hash(testUser.password, 10),
+      },
+    })
+
+    const testEvent = {
+      name: 'Test Event',
+      max_participants: 4,
+      start_location: 'Test Start',
+      end_location: 'Test End',
+      event_date: new Date(2020, 9, 27, 18, 30, 0, 0),
+    }
+
+    const event = await prisma.event.create({
+      data: {
+        user: {
+          connect: {
+            id: user.id,
+          },
+        },
+        name: testEvent.name,
+        max_participants: testEvent.max_participants,
+        start_location: testEvent.start_location,
+        end_location: testEvent.end_location,
+        event_date: testEvent.event_date,
+      },
+    })
+
+    const registration = await prisma.registration.create({
+      data: {
+        user: {
+          connect: {
+            id: user.id,
+          },
+        },
+        event: {
+          connect: {
+            id: event.id,
+          },
+        },
+      },
+    })
+
+    const res = mockResponse()
+    const req = mockRequest()
+    const registrationEventResponse = await Registration.event(registration, null, {
+      prisma: prisma,
+      request: req,
+      response: res,
+    })
+
+    expect(registrationEventResponse).toEqual(event)
+
+    await prisma.registration.delete({
+      where: {
+        id: registration.id,
+      },
+    })
+
+    await prisma.event.delete({
+      where: {
+        id: event.id,
+      },
+    })
+
+    await prisma.user.delete({
+      where: {
+        id: user.id,
+      },
+    })
+  })
+
+  it('registrationUser', async () => {
+    const testUser = {
+      name: 'Test Man',
+      email: 'test@example.com',
+      password: 'testpass',
+    }
+
+    const user = await prisma.user.create({
+      data: {
+        name: testUser.name,
+        email: testUser.email,
+        password: await bcrypt.hash(testUser.password, 10),
+      },
+    })
+
+    const testEvent = {
+      name: 'Test Event',
+      max_participants: 4,
+      start_location: 'Test Start',
+      end_location: 'Test End',
+      event_date: new Date(2020, 9, 27, 18, 30, 0, 0),
+    }
+
+    const event = await prisma.event.create({
+      data: {
+        user: {
+          connect: {
+            id: user.id,
+          },
+        },
+        name: testEvent.name,
+        max_participants: testEvent.max_participants,
+        start_location: testEvent.start_location,
+        end_location: testEvent.end_location,
+        event_date: testEvent.event_date,
+      },
+    })
+
+    const registration = await prisma.registration.create({
+      data: {
+        user: {
+          connect: {
+            id: user.id,
+          },
+        },
+        event: {
+          connect: {
+            id: event.id,
+          },
+        },
+      },
+    })
+
+    const res = mockResponse()
+    const req = mockRequest()
+    const registrationUserResponse = await Registration.user(registration, null, {
+      prisma: prisma,
+      request: req,
+      response: res,
+    })
+
+    expect(registrationUserResponse).toEqual(user)
+
+    await prisma.registration.delete({
+      where: {
+        id: registration.id,
+      },
+    })
+
+    await prisma.event.delete({
+      where: {
+        id: event.id,
+      },
+    })
+
+    await prisma.user.delete({
+      where: {
+        id: user.id,
+      },
+    })
+  })
+
   it('eventRegistrations', async () => {
     const testUser = {
       name: 'Test Man',
-      email: 'test@test.com',
+      email: 'test@example.com',
       password: 'testpass',
     }
 
@@ -237,7 +402,7 @@ describe('registration queries', () => {
   it('registrations', async () => {
     const testUser = {
       name: 'Test Man',
-      email: 'test@test.com',
+      email: 'test@example.com',
       password: 'testpass',
     }
 
@@ -367,7 +532,7 @@ describe('registration queries', () => {
   it('userRegistrations', async () => {
     const testUser = {
       name: 'Test Man',
-      email: 'test@test.com',
+      email: 'test@example.com',
       password: 'testpass',
     }
 

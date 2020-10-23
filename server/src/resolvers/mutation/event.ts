@@ -140,7 +140,7 @@ export const Event = {
     })
 
     if (!event) {
-      throw new Error(`Event could not be found`)
+      throw new Error(`Event could not be found.`)
     }
 
     const register: RegistrationType = await ctx.prisma.registration
@@ -182,7 +182,7 @@ export const Event = {
     })
 
     if (!event) {
-      throw new Error(`Event could not be found`)
+      throw new Error(`Event could not be found.`)
     }
 
     const registration: RegistrationType = await ctx.prisma.registration
