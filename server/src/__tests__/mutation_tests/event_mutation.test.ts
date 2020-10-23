@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 
-import { Event } from '../resolvers/mutation/event'
+import { Event } from '../../resolvers/mutation/event'
 
 require('sinon')
 const { mockRequest, mockResponse } = require('mock-req-res')

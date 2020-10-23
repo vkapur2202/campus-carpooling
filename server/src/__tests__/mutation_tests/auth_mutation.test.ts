@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 
-import { Auth } from '../resolvers/mutation/auth'
+import { Auth } from '../../resolvers/mutation/auth'
 
 require('sinon')
 const { mockRequest, mockResponse } = require('mock-req-res')

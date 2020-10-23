@@ -18,11 +18,11 @@ module.exports = {
       },
     ],
   ],
-  collectCoverageFrom: ['src/resolvers/**/*.{js,jsx,ts,tsx}'],
+  collectCoverageFrom: ['src/resolvers/**/*.{js,jsx,ts,tsx}', '!src/resolvers/query/*'],
   coverageThreshold: {
     global: {
       statements: 80,
-      branches: 100,
+      branches: 50,
     },
   },
 }
