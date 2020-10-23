@@ -68,6 +68,13 @@ export const Event = {
     if (!eventToDelete) {
       throw new Error(`Event could not be found.`)
     }
+
+    await ctx.prisma.registration.deleteMany({
+      where: {
+        event_id: eventToDelete.id,
+      },
+    })
+
     await ctx.prisma.event
       .delete({
         where: {
