@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import Logout from "../Logout/Logout";
 import { Context } from "../Store/Store";
+import UserRegistrations from "../UserRegistrations/UserRegistrations";
 
 
 function Logo() {
@@ -41,6 +42,14 @@ function UserEventLink() {
   );
 }
 
+function RegisteredEventsLink() {
+  return (
+    <div className="navbar-right-item">
+      <Link to="/registered_events">Your Registrations</Link>
+    </div>
+  );
+}
+
 function LogoutLink() {
   return (
     <div className="navbar-right-item">
@@ -72,6 +81,7 @@ function Nav() {
         {state.loggedIn && (
           <>
             <UserEventLink />
+            <RegisteredEventsLink />
             <ProfileLink />
             <LogoutLink />
           </>

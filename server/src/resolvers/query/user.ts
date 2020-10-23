@@ -24,4 +24,11 @@ export const User = {
       },
     })
   },
+  registrations: (parent, args, ctx: Context) => {
+    return ctx.prisma.registration.findMany({
+      where: {
+        user_id: parent.id,
+      },
+    })
+  },
 }

@@ -16,7 +16,6 @@ function Events(props) {
         <Table hover>
           <thead>
             <tr>
-              <th>Event ID</th>
               <th>Event Name</th>
               <th>Max Participants</th>
               <th>Start Location</th>
@@ -31,7 +30,6 @@ function Events(props) {
           {props.events.map((event, i) => (
             <tbody key={i}>
               <tr>
-                <td>{event.id}</td>
                 <td>{event.name}</td>
                 <td>{event.max_participants}</td>
                 <td>{event.start_location}</td>
@@ -49,7 +47,7 @@ function Events(props) {
                     onClick={() => {
                       setUpdateShow(true);
                       setEvent(event);
-                      }
+                    }
                     }
                   >
                     Update
@@ -79,7 +77,7 @@ function Events(props) {
           <Modal.Title>Update</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <UpdateUserEvent event={event}/>
+          <UpdateUserEvent event={event} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={() => setUpdateShow(false)}>

@@ -228,3 +228,34 @@ export const REGISTER_MUTATION = gql`
     }
   }
 `;
+
+export const UNREGISTER_MUTATION = gql`
+  mutation($event_id: Int!) {
+    unregister(event_id: $event_id){
+      message
+    }
+  }
+`;
+
+export const GET_ALL_USER_REGISTRATIONS_QUERY = gql`
+  query($id: ID!){
+    user(id: $id){
+      registrations {
+        event {
+          id
+          name
+          max_participants
+          start_location
+          end_location
+          event_date
+          is_active
+          updated_on
+          user {
+            name
+            email
+          }
+        }
+      }
+    }
+  }
+`;

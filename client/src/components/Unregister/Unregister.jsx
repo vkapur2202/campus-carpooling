@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Alert } from "react-bootstrap";
-import { REGISTER_MUTATION } from "../../GraphQLRequests";
+import { UNREGISTER_MUTATION } from "../../GraphQLRequests";
 import { useMutation } from "@apollo/react-hooks";
 import { Redirect } from "react-router";
 import "../../App.css";
 
-function Registration(event) {
-    const registration = event.event
+function Unregister(registration) {
+    const currentRegisteredEvent = registration.registration.event
 
-    const [register] = useMutation(REGISTER_MUTATION, {
+    console.log(currentRegisteredEvent);
+    const [unregister] = useMutation(UNREGISTER_MUTATION, {
         errorPolicy: "all",
     });
 
@@ -21,10 +22,10 @@ function Registration(event) {
     const handleSubmit = (event) => {
         const registerInput = {
             variables: {
-                event_id: parseInt(registration.id),
+                event_id: parseInt(currentRegisteredEvent.id),
             }
         }
-        register(registerInput)
+        unregister(registerInput)
             .then((resp) => {
                 setRegister(true);
             })
@@ -35,26 +36,29 @@ function Registration(event) {
     return (
         <div>
             {registerError ? (
-                <Alert variant="danger">{"You already registered for this event!"}</Alert>
+                <Alert variant="danger">{"You are no longer registered for this event"}</Alert>
             ) : undefined}
 
             <div className="content">
                 <div className="vertical-content">
 
-                    <h1>Register for Event</h1>
+                    <h1>Unregister from </h1>
                     <p>
-                        {registration.name}
+                        {currentRegisteredEvent.name}
                     </p>
                     <p>
-                        {registration.start_location}
+                        {currentRegisteredEvent.start_location}
                     </p>
                     <p>
-                        {registration.end_location}
+                        {currentRegisteredEvent.end_location}
                     </p>
                     <p>
-                        {registration.event_date}
+                        {currentRegisteredEvent.event_date}
                     </p>
-                    <Button onClick={handleSubmit} variant="primary">Register</Button>{' '}
+                    <p>
+                        Are you sure you want to unregister?
+                    </p>
+                    <Button onClick={handleSubmit} variant="primary">Unregister</Button>{' '}
 
                     {/* <RegistrationConfirmation event={event}/> */}
                 </div>
@@ -64,7 +68,5 @@ function Registration(event) {
     );
 }
 
-
-
-export default Registration;
+export default Unregister;
 

@@ -58,12 +58,4 @@ export const Query = {
       },
     })
   },
-
-  userRegistrations(parent, { id }, ctx: Context) {
-    return ctx.prisma.registration.findMany({
-      where: {
-        user_id: id,
-      },
-    })
-  },
 }
