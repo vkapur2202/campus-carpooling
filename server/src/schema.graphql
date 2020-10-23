@@ -15,7 +15,7 @@ type Query {
   registration: Registration!
   registrations: [Registration!]!
   userRegistrations: [Registration!]!
-  participants: [Registration!]!
+  eventRegistrations: [Registration!]!
 }
 
 type Mutation {

@@ -21,6 +21,7 @@
   },
   "lint-staged": {
     "./**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "jest --findRelatedTests --bail",
       "npm run format",
       "npm run lint"
     ]

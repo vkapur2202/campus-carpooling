@@ -1,12 +1,11 @@
 import { Context } from '../utils'
-import { Registration } from './query/registration'
 
 export const Query = {
   me(parent, args, ctx: Context) {
     if (!ctx.request.userId) {
       return null
     }
-    return ctx.request.user
+    return ctx.prisma.user.findOne({ where: { id: ctx.request.userId } })
   },
   user(parent, { id }, ctx: Context) {
     id = parseInt(id)
@@ -43,7 +42,7 @@ export const Query = {
     return ctx.prisma.registration.findMany()
   },
 
-  participants(parent, { id }, ctx: Context) {
+  eventRegistrations(parent, { id }, ctx: Context) {
     return ctx.prisma.registration.findMany({
       where: {
         event_id: id,
@@ -51,6 +50,13 @@ export const Query = {
     })
   },
 
+  userRegistrations(parent, { id }, ctx: Context) {
+    return ctx.prisma.registration.findMany({
+      where: {
+        user_id: id,
+      },
+    })
+  },
   registration(parent, { id }, ctx: Context) {
     return ctx.prisma.registration.findOne({
       where: {
