@@ -40,10 +40,15 @@ export const Auth = {
     if (!ctx.request.userId) {
       throw new AuthError()
     }
+    const user = await ctx.prisma.user.findOne({
+      where: {
+        id: ctx.request.userId,
+      },
+    })
     const token: string = jwt.sign({ userId: ctx.request.userId }, config.APP_SECRET, { expiresIn: '1h' })
     const sent = await transport.sendMail({
       from: config.MAIL_USER,
-      to: ctx.request.user.email,
+      to: user.email,
       subject: `${config.APP_NAME}: Confirm your account!`,
       html: activateAccountEmail(
         `<a href="${config.FRONTEND_URL}/confirm/${token}">Click here to confirm your account!</a>`
@@ -51,7 +56,7 @@ export const Auth = {
     })
 
     if (!sent) {
-      throw new Error(`Couldn't send email to ${ctx.request.user.email}`)
+      throw new Error(`Couldn't send email to ${user.email}`)
     }
 
     return { message: 'Confirmation email successfully sent!' }

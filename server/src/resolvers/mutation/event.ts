@@ -13,7 +13,11 @@ export const Event = {
     if (!ctx.request.userId) {
       throw new AuthError()
     }
-    const user: UserType = ctx.request.user
+    const user: UserType = await ctx.prisma.user.findOne({
+      where: {
+        id: ctx.request.userId,
+      },
+    })
 
     const event: EventType = await ctx.prisma.event
       .findMany({
@@ -116,7 +120,11 @@ export const Event = {
       throw new AuthError()
     }
 
-    const user: UserType = ctx.request.user
+    const user: UserType = await ctx.prisma.user.findOne({
+      where: {
+        id: ctx.request.userId,
+      },
+    })
 
     const event: EventType = await ctx.prisma.event.findOne({
       where: {
@@ -154,7 +162,11 @@ export const Event = {
       throw new AuthError()
     }
 
-    const user: UserType = ctx.request.user
+    const user: UserType = await ctx.prisma.user.findOne({
+      where: {
+        id: ctx.request.userId,
+      },
+    })
 
     const event: EventType = await ctx.prisma.event.findOne({
       where: {
