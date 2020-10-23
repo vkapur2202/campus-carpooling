@@ -64,6 +64,7 @@ type User {
   events: [Event!]!
   active_events: [Event!]!
   inactive_events: [Event!]!
+  registrations: [Registration!]!
 }
 
 type Event {
