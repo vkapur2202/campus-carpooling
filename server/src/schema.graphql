@@ -40,7 +40,7 @@ type Mutation {
     start_location: String
     end_location: String
     event_date: DateTime
-  ): SuccessMessage
+  ): Event!
   deleteEvent(userId: Int!, name: String!, event_date: DateTime!): SuccessMessage
 }
 
