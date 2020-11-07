@@ -2,6 +2,8 @@ import { event as EventType, registration as RegistrationType, user as UserType 
 import * as moment from 'moment'
 import { start } from 'repl'
 
+import config from '../../config'
+import { eventDeleteEmail, eventUpdateEmail, transport } from '../../mail'
 import { AuthError, Context, ISuccessMessage } from '../../utils'
 
 export const Event = {
@@ -69,6 +71,22 @@ export const Event = {
       throw new Error(`Event could not be found.`)
     }
 
+    const registrations = await ctx.prisma.registration.findMany({
+      where: {
+        event_id: eventToDelete.id,
+      },
+    })
+
+    const emails: string[] = []
+    registrations.forEach(async (registration) => {
+      const user = await ctx.prisma.user.findOne({
+        where: {
+          id: registration.user_id,
+        },
+      })
+      emails.push(user.email)
+    })
+
     await ctx.prisma.registration.deleteMany({
       where: {
         event_id: eventToDelete.id,
@@ -84,6 +102,23 @@ export const Event = {
       .catch(() => {
         throw new Error(`Error deleting event.`)
       })
+
+    const sent = await transport.sendMail({
+      from: config.MAIL_USER,
+      to: emails,
+      subject: `${config.APP_NAME}: Event "${eventToDelete.name}" Cancellation!`,
+      html: eventDeleteEmail(
+        `<p> 
+            Name: ${eventToDelete.name} <br> Maximum Participants: ${eventToDelete.max_participants} <br> Start Location: ${eventToDelete.start_location} 
+            <br> End Location: ${eventToDelete.end_location} <br> Event Date and Time: ${eventToDelete.event_date}
+          </p>`
+      ),
+    })
+
+    if (!sent) {
+      throw new Error(`Couldn't send email to registered users`)
+    }
+
     return { message: 'Event successfully deleted!' }
   },
 
@@ -100,6 +135,22 @@ export const Event = {
       where: {
         id: id,
       },
+    })
+
+    const registrations = await ctx.prisma.registration.findMany({
+      where: {
+        event_id: event.id,
+      },
+    })
+
+    const emails: string[] = []
+    registrations.forEach(async (registration) => {
+      const user = await ctx.prisma.user.findOne({
+        where: {
+          id: registration.user_id,
+        },
+      })
+      emails.push(user.email)
     })
 
     const updateEvent: EventType = await ctx.prisma.event
@@ -119,6 +170,22 @@ export const Event = {
       .catch(() => {
         throw new Error(`Error updating event.`)
       })
+
+    const sent = await transport.sendMail({
+      from: config.MAIL_USER,
+      to: emails,
+      subject: `${config.APP_NAME}: Event "${updateEvent.name}" Update!`,
+      html: eventUpdateEmail(
+        `<p> 
+            Name: ${updateEvent.name} <br> Maximum Participants: ${updateEvent.max_participants} <br> Start Location: ${updateEvent.start_location} 
+            <br> End Location: ${updateEvent.end_location} <br> Event Date and Time: ${updateEvent.event_date}
+          </p>`
+      ),
+    })
+
+    if (!sent) {
+      throw new Error(`Couldn't send email to registered users`)
+    }
     return updateEvent
   },
 

@@ -2,13 +2,13 @@ import config from './config'
 const nodemailer = require('nodemailer')
 
 export const transport = nodemailer.createTransport({
-    host: config.MAIL_HOST,
-    port: config.MAIL_PORT,
-    service: 'gmail',
-    auth: {
-        user: config.MAIL_USER,
-        pass: config.MAIL_PASS,
-    },
+  host: config.MAIL_HOST,
+  port: config.MAIL_PORT,
+  service: 'gmail',
+  auth: {
+    user: config.MAIL_USER,
+    pass: config.MAIL_PASS,
+  },
 })
 
 export const activateAccountEmail = (text) => `
@@ -47,6 +47,38 @@ export const resetPasswordEmail = (text) => `
             If you didn't send this request, just disregard this message. No further
             action is necessary.
         </p>
+        <p>Cheers!</p>
+    </div>
+`
+
+export const eventUpdateEmail = (text) => `
+    <div className="email" style="
+        border: 1px solid black;
+        padding: 20px;
+        font-family: sans-serif;
+        line-height: 2;
+        font-size: 20px;
+    ">
+        <p>
+            An event you are registered for has been updated! The updated information is below:
+        </p>
+        <p>${text}</p>
+        <p>Cheers!</p>
+    </div>
+`
+
+export const eventDeleteEmail = (text) => `
+    <div className="email" style="
+        border: 1px solid black;
+        padding: 20px;
+        font-family: sans-serif;
+        line-height: 2;
+        font-size: 20px;
+    ">
+        <p>
+            Your event has been successfully deleted! The deleted event information is below:
+        </p>
+        <p>${text}</p>
         <p>Cheers!</p>
     </div>
 `
