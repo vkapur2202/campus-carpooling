@@ -11,7 +11,7 @@ import { Redirect } from "react-router";
 function Home() {
   const [state, dispatch] = useContext(Context);
   const { loading, error, data } = useQuery(GET_ALL_EVENTS_QUERY, {
-    // put options here
+    fetchPolicy: "cache-and-network"
   });
 
   if (loading) return <p>Loading...</p>;

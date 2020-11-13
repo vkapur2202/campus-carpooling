@@ -11,6 +11,7 @@ function UserRegistrations() {
   const [state, dispatch] = useContext(Context);
   const { loading, error, data } = useQuery(GET_ALL_USER_REGISTRATIONS_QUERY, {
     variables: { id: state.currentUser },
+    fetchPolicy: "cache-and-network"
   });
 
   if (loading) return <p>Loading...</p>;
