@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import UpdateUserEvent from "../UpdateEvent/UpdateEvent"
 import DeleteUserEvent from "../DeleteUserEvent/DeleteEvent"
 import { useState } from "react";
+import Moment from 'react-moment';
 
 function Events(props) {
   const [updateShow, setUpdateShow] = useState(false);
@@ -35,7 +36,11 @@ function Events(props) {
                 <td>{event.max_participants}</td>
                 <td>{event.start_location}</td>
                 <td>{event.end_location}</td>
-                <td>{event.event_date}</td>
+                <td>
+                  <Moment format="LLL">
+                    {event.event_date}
+                  </Moment> 
+                </td>
                 <td>{event.user.name}</td>
                 <td>
                   <Button

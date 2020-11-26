@@ -3,8 +3,8 @@ import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
-import UserRegisteredEvents from "../RegisteredEvents/UserRegisteredEvents";
 import Unregister from "../Unregister/Unregister";
+import Moment from 'react-moment';
 
 function Registrations(props) {
   const [unregisterShow, setUnregisterShow] = useState(false);
@@ -36,8 +36,16 @@ function Registrations(props) {
                 <td>{registration.event.max_participants}</td>
                 <td>{registration.event.start_location}</td>
                 <td>{registration.event.end_location}</td>
-                <td>{registration.event.event_date}</td>
-                <td>{registration.event.updated_on}</td>
+                <td>
+                  <Moment format="LLL">
+                    {registration.event.event_date}
+                  </Moment> 
+                </td>
+                <td>
+                  <Moment format="LLL">
+                    {registration.event.updated_on}
+                  </Moment> 
+                </td>
                 <td>{registration.event.user.name}</td>
                 <td>{registration.event.user.email}</td>
                 <td>
