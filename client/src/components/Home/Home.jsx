@@ -7,6 +7,7 @@ import ActiveEvents from "../Events/ActiveEvents";
 import InactiveEvents from "../Events/InactiveEvents";
 import { Context } from "../Store/Store";
 import { Redirect } from "react-router";
+import HomeCSS from "./Home.css";
 
 function Home() {
   const [state, dispatch] = useContext(Context);
@@ -24,12 +25,17 @@ function Home() {
             <h1>Home</h1>
             <p>Welcome to the Home page!</p>
             <p>Sign up or login to get started!</p>
-            <Button variant="primary" size="lg">
-              <Link to="/signup">Sign Up</Link>
+
+            <Link to="/signup" className="nav-button">
+              <Button variant="primary" size="lg">
+                Sign Up
             </Button>
-            <Button variant="primary" size="lg">
-              <Link to="/login">Login</Link>
+            </Link>
+            <Link to="/login" className="nav-button">
+              <Button variant="primary" size="lg">
+                Login
             </Button>
+            </Link>
           </div>
         )}
         <div className="center-row">
