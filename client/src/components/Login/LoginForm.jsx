@@ -47,7 +47,7 @@ function LoginForm() {
     login(loginInput)
       .then((resp) => {
         dispatch({ type: "SET_LOGIN_STATUS", payload: true });
-        dispatch({ type: "SET_CURRENT_USER", payload: resp.data.login.id });
+        dispatch({ type: "SET_CURRENT_USER", payload: resp.data.login.id});
         setLoginVariables({
           isLoggedIn: true,
           isConfirmed: resp.data.login.confirmed,
