@@ -31,7 +31,6 @@ function Registration(event) {
             .catch((err) => setRegisterError(err.message));
     };
 
-    // if (hasRegistered) return <Redirect to="/" />;
     return (
         <div>
             {registerError ? (

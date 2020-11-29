@@ -32,11 +32,11 @@ function DeleteEventForm(event) {
             })
             .catch((err) => setDeleteEventError(err.message));
     };
-
+    if (DeleteEventError.includes("Event could not be found")) return <Redirect to="/" />;
     return (
         <div>
             {DeleteEventError ? (
-                <Alert variant="danger">{DeleteEventError}</Alert>
+                <Alert variant="danger">{DeleteEventError.replace("GraphQL error: ", "")}</Alert>
             ) : undefined}
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="nameGroup">

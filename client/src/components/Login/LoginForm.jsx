@@ -47,7 +47,7 @@ function LoginForm() {
     login(loginInput)
       .then((resp) => {
         dispatch({ type: "SET_LOGIN_STATUS", payload: true });
-        dispatch({ type: "SET_CURRENT_USER", payload: resp.data.login.id});
+        dispatch({ type: "SET_CURRENT_USER", payload: resp.data.login.id });
         setLoginVariables({
           isLoggedIn: true,
           isConfirmed: resp.data.login.confirmed,
@@ -63,7 +63,7 @@ function LoginForm() {
 
   return (
     <div>
-      {loginError ? <Alert variant="danger">{loginError}</Alert> : undefined}
+      {loginError ? <Alert variant="danger">{loginError.replace("GraphQL error: ", "")}</Alert> : undefined}
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="nameGroup">
           <Form.Label>Email</Form.Label>
