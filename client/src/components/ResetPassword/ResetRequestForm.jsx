@@ -47,7 +47,7 @@ function ResetRequestForm() {
   return (
     <div>
       {resetRequestError ? (
-        <Alert variant="danger">{resetRequestError}</Alert>
+        <Alert variant="danger">{"Can't find a user in our system with this email."}</Alert>
       ) : undefined}
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="nameGroup">

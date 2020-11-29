@@ -59,7 +59,7 @@ function SignupForm() {
 
   return (
     <div>
-      {signUpError ? <Alert variant="danger">{signUpError}</Alert> : undefined}
+      {signUpError ? <Alert variant="danger">{"Please fill out all of the information"}</Alert> : undefined}
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="nameGroup">
           <Form.Label>Full name</Form.Label>

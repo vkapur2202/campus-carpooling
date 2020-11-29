@@ -36,7 +36,7 @@ function DeleteEventForm(event) {
     return (
         <div>
             {DeleteEventError ? (
-                <Alert variant="danger">{DeleteEventError}</Alert>
+                <Alert variant="danger">{"You have already deleted this event."}</Alert>
             ) : undefined}
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="nameGroup">
