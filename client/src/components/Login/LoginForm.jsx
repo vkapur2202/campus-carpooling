@@ -6,10 +6,11 @@ import { LOGIN_MUTATION } from "../../GraphQLRequests";
 import { useMutation } from "@apollo/react-hooks";
 import { Redirect } from "react-router";
 import { Context } from "../Store/Store";
+import LoginCSS from "./Login.css";
+import { Link } from "react-router-dom";
 
 function LoginForm() {
-  const initialFields = {
-  };
+  const initialFields = {};
   const [state, dispatch] = useContext(Context);
   const [fields, setFields] = useState(initialFields);
   const [loginVariables, setLoginVariables] = useState({
@@ -47,7 +48,7 @@ function LoginForm() {
     login(loginInput)
       .then((resp) => {
         dispatch({ type: "SET_LOGIN_STATUS", payload: true });
-        dispatch({ type: "SET_CURRENT_USER", payload: resp.data.login.id});
+        dispatch({ type: "SET_CURRENT_USER", payload: resp.data.login.id });
         setLoginVariables({
           isLoggedIn: true,
           isConfirmed: resp.data.login.confirmed,
@@ -85,9 +86,21 @@ function LoginForm() {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Login
-        </Button>
+        <div className="flex-container">
+          <div className="leftBottom">
+            <div className="leftBottomSignUp">
+              <Link to="/signup">Create Account</Link>
+            </div>
+            <div className="leftBottomReset">
+              <Link to="/reset_request">Reset Password</Link>
+            </div>
+          </div>
+          <div className="submitButton">
+            <Button variant="primary" type="submit">
+              Login
+            </Button>
+          </div>
+        </div>
       </Form>
     </div>
   );

@@ -78,6 +78,7 @@ type Event {
   created_on: DateTime!
   updated_on: DateTime!
   user: User!
+  participants: Int!
 }
 
 type Registration {

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { ACTIVATE_ACCOUNT_MUTATION } from "../../GraphQLRequests";
 import Button from "react-bootstrap/Button";
 import { useMutation } from "@apollo/react-hooks";
+import "../../App.css";
+import ActivateAccountCSS from "./ActivateAccount.css";
 
 function ActivateAccount(props) {
   const email = props.match.params.email;
@@ -29,8 +31,10 @@ function ActivateAccount(props) {
 
   return (
     <div className="content">
-      <p>Activate your account</p>
-      <Button onClick={activateAccount}>Send email confirmation</Button>
+      <div className="vertical-content1">
+        <h2>Activate Your Account</h2> <br />
+        <Button onClick={activateAccount}>Send email confirmation</Button>
+      </div>
     </div>
   );
 }

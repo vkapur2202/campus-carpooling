@@ -210,6 +210,19 @@ export const Event = {
       throw new Error(`Event could not be found.`)
     }
 
+    // const participants = event.participants;
+
+    // const updateParticipants: EventType = await ctx.prisma.event
+    //   .update({
+    //     where: {
+    //       id: event.id,
+    //     },
+    //     data: {
+    //       name,
+    //       participants
+    //       updated_on: moment().toDate(),
+    //     },
+
     const register: RegistrationType = await ctx.prisma.registration
       .create({
         data: {
@@ -260,6 +273,48 @@ export const Event = {
         },
       })
       .then((resp) => resp[0])
+
+    //   await ctx.prisma.registration
+    //     .delete({
+    //       where: {
+    //         id: registration.id,
+    //       },
+    //     })
+    //     .catch(() => {
+    //       throw new Error(`Error deleting registration.`)
+    //     })
+    //   return { message: 'Registration successfully deleted!' }
+    // },
+
+    // async participants(parent, { event_id }, ctx: Context): Promise<ISuccessMessage | Error> {
+    //   if (!ctx.request.userId) {
+    //     throw new AuthError()
+    //   }
+
+    //   const user: UserType = await ctx.prisma.user.findOne({
+    //     where: {
+    //       id: ctx.request.userId,
+    //     },
+    //   })
+
+    //   const event: EventType = await ctx.prisma.event.findOne({
+    //     where: {
+    //       id: event_id,
+    //     },
+    //   })
+
+    //   if (!event) {
+    //     throw new Error(`Event could not be found.`)
+    //   }
+
+    //   const registration: RegistrationType = await ctx.prisma.registration
+    //     .findMany({
+    //       where: {
+    //         event_id: event_id,
+    //         user_id: user.id,
+    //       },
+    //     })
+    //     .then((resp) => resp[0])
 
     await ctx.prisma.registration
       .delete({

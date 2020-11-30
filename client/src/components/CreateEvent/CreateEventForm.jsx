@@ -5,6 +5,8 @@ import { Alert } from "react-bootstrap";
 import { CREATE_EVENT_MUTATION } from "../../GraphQLRequests";
 import { useMutation } from "@apollo/react-hooks";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
+import CreateEventCSS from "./CreateEvent.css";
 
 function CreateEventForm() {
   const initialFields = {};
@@ -51,6 +53,7 @@ function CreateEventForm() {
 
   const { hasCreatedEvent } = createdEventVariable;
   if (hasCreatedEvent) return <Redirect to="/" />;
+
   return (
     <div>
       {createEventError ? (
@@ -66,6 +69,7 @@ function CreateEventForm() {
             onChange={handleInputChange}
           />
         </Form.Group>
+
         <Form.Group controlId="maxParticipantsGroup">
           <Form.Label>Max Participants</Form.Label>
           <Form.Control
@@ -75,6 +79,7 @@ function CreateEventForm() {
             name="max_participants"
           />
         </Form.Group>
+
         <Form.Group controlId="startLocationGroup">
           <Form.Label>Start Location</Form.Label>
           <Form.Control
@@ -84,6 +89,7 @@ function CreateEventForm() {
             onChange={handleInputChange}
           />
         </Form.Group>
+
         <Form.Group controlId="endLocationGroup">
           <Form.Label>End Location</Form.Label>
           <Form.Control
@@ -93,6 +99,7 @@ function CreateEventForm() {
             onChange={handleInputChange}
           />
         </Form.Group>
+
         <Form.Group controlId="eventNameGroup">
           <Form.Label>Event Date and Time</Form.Label>
           <Form.Control
@@ -102,9 +109,17 @@ function CreateEventForm() {
             onChange={handleInputChange}
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
+
+        <div className="flex-container">
+          <div className="backToHome">
+            <Link to="/">Back to Home Page</Link>
+          </div>
+          <div className="submitButton">
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </div>
+        </div>
       </Form>
     </div>
   );

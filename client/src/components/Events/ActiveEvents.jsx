@@ -2,13 +2,38 @@ import React from "react";
 import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Registration from "../Registration/Registration";
-import Moment from 'react-moment';
+import Moment from "react-moment";
+import { GET_ALL_EVENT_REGISTRATIONS_QUERY } from "../../GraphQLRequests";
+import { useQuery } from "@apollo/react-hooks";
+import { Context } from "../Store/Store";
+import { useEffect } from "react";
+
+// const EventDetails = () => {
+//   const { loading, error, data } = (id) => {
+//     useQuery(GET_ALL_EVENT_REGISTRATIONS_QUERY, {
+//       variables: props.event.id,
+//     });
+//     if (data) {
+//       console.log(data);
+//     }
+//     if (loading) return null;
+//     if (error) return `Error! ${error}`;
+//     if (data) {
+//       console.log(data);
+//     }
+//   };
+// };
 
 function Events(props) {
   const [show, setShow] = useState(false);
   const [event, setEvent] = useState();
+  const [state, dispatch] = useContext(Context);
+  // console.log(state);
+  // console.log(props);
+  // const [events, {loading, data}] = useLazyQuery(GET_ALL_EVENT_REGISTRATIONS_QUERY);
+
   return (
     <>
       <div className="activeEvents">
@@ -22,6 +47,7 @@ function Events(props) {
               <th>End Location</th>
               <th>Date and Time</th>
               <th>Event Host</th>
+              <th>Register</th>
             </tr>
           </thead>
 
@@ -33,9 +59,7 @@ function Events(props) {
                 <td>{event.start_location}</td>
                 <td>{event.end_location}</td>
                 <td>
-                  <Moment format="LLL">
-                    {event.event_date}
-                  </Moment> 
+                  <Moment format="LLL">{event.event_date}</Moment>
                 </td>
                 <td>{event.user.name}</td>
                 <td>
@@ -47,10 +71,9 @@ function Events(props) {
                     }}
                     variant="link"
                     onClick={() => {
-                      setShow(true)
-                      setEvent(event)
-                    }
-                    }
+                      setShow(true);
+                      setEvent(event);
+                    }}
                   >
                     Register
                   </Button>

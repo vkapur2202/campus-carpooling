@@ -37,7 +37,7 @@ function Registration(event) {
     <div>
       {registerError ? (
         <Alert variant="danger">
-          {"You already registered for this event!"}
+          {"You already pre-registered for this event!"}
         </Alert>
       ) : undefined}
 
@@ -51,7 +51,7 @@ function Registration(event) {
             <Moment format="LLL">{registration.event_date}</Moment>
           </p>
           <Button onClick={handleSubmit} variant="primary">
-            Register
+            Pre-Register
           </Button>{" "}
           {/* <RegistrationConfirmation event={event}/> */}
         </div>
