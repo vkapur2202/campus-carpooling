@@ -6,6 +6,10 @@ export const CURRENT_USER_QUERY = gql`
       id
       email
       name
+      year
+      gender
+      can_drive
+      max_capacity
     }
   }
 `;
@@ -72,6 +76,9 @@ export const PROFILE_MUTATION = gql`
       id
       name
       year
+      gender
+      can_drive
+      max_capacity
     }
   }
 `;
@@ -106,8 +113,8 @@ export const GET_ALL_EVENTS_QUERY = gql`
 `;
 
 export const GET_ALL_USER_EVENTS_QUERY = gql`
-  query($id: ID!){
-    user(id: $id){
+  query($id: ID!) {
+    user(id: $id) {
       active_events {
         user {
           id
@@ -137,13 +144,14 @@ export const GET_ALL_USER_EVENTS_QUERY = gql`
 `;
 
 export const GET_EVENT_QUERY = gql`
-  query($id: ID!){
-    event(id: $id){
+  query($id: ID!) {
+    event(id: $id) {
       name
       max_participants
       start_location
       end_location
       event_date
+      participants
     }
   }
 `;
@@ -172,6 +180,7 @@ export const CREATE_EVENT_MUTATION = gql`
       start_location
       end_location
       event_date
+      participants
     }
   }
 `;
@@ -199,12 +208,12 @@ export const UPDATE_EVENT_MUTATION = gql`
 `;
 
 export const DELETE_EVENT_MUTATION = gql`
-  mutation($event_id: Int!){
-    deleteEvent(event_id: $event_id){
+  mutation($event_id: Int!) {
+    deleteEvent(event_id: $event_id) {
       message
     }
   }
-  `;
+`;
 
 export const RESET_REQUEST_MUTATION = gql`
   mutation($email: String!) {
@@ -226,7 +235,7 @@ export const RESET_PASSWORD_MUTATION = gql`
 
 export const REGISTER_MUTATION = gql`
   mutation($event_id: Int!) {
-    register(event_id: $event_id){
+    register(event_id: $event_id) {
       event {
         name
         start_location
@@ -239,15 +248,15 @@ export const REGISTER_MUTATION = gql`
 
 export const UNREGISTER_MUTATION = gql`
   mutation($event_id: Int!) {
-    unregister(event_id: $event_id){
+    unregister(event_id: $event_id) {
       message
     }
   }
 `;
 
 export const GET_ALL_USER_REGISTRATIONS_QUERY = gql`
-  query($id: ID!){
-    user(id: $id){
+  query($id: ID!) {
+    user(id: $id) {
       registrations {
         event {
           id
@@ -267,3 +276,19 @@ export const GET_ALL_USER_REGISTRATIONS_QUERY = gql`
     }
   }
 `;
+
+// export const GET_ALL_EVENT_REGISTRATIONS_QUERY = gql`
+//   query($id: ID!) {
+//     event(id: $id) {
+//       registrations {
+//         user_id
+//       }
+//     }
+//   }
+// `;
+
+// export const NUMBER_OF_PARTICIPANTS_MUTATION = gql`
+//   mutation($event_id: Int!) {
+
+//   }
+//   `;

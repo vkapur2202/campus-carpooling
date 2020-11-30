@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS "event" (
   is_active BOOLEAN DEFAULT TRUE,
   created_on TIMESTAMP DEFAULT NOW(),  
   updated_on TIMESTAMP DEFAULT NOW(),  
-  user_id INTEGER NOT NULL REFERENCES "user"
+  user_id INTEGER NOT NULL REFERENCES "user",
+  participants INTEGER DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS "registration" (

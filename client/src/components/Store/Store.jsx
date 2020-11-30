@@ -4,6 +4,10 @@ import Reducer from "./Reducer";
 const initialState = {
   loggedIn: null,
   currentUser: null,
+  // currentUserYear: null,
+  // currentUserGender: null,
+  // currentUserDrive: null,
+  // currentUserMaxCap: null,
 };
 
 const Store = ({ children }) => {

@@ -27,6 +27,7 @@ function App() {
           <Pages />
           <Footer />
         </Store>
+        
       </Router>
     </div>
   );

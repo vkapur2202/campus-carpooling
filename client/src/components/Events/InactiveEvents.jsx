@@ -3,11 +3,12 @@ import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
+import Preregistration from "../Registration/Preregistration";
 import Moment from 'react-moment';
 
 function Events(props) {
   const [show, setShow] = useState(false);
-
+  const [event, setEvent] = useState();
   return (
     <>
       <div className="inactiveEvents">
@@ -21,6 +22,7 @@ function Events(props) {
               <th>End Location</th>
               <th>Proposed Date and Time</th>
               <th>Event Host</th>
+              <th>Pre-register</th>
             </tr>
           </thead>
 
@@ -34,7 +36,8 @@ function Events(props) {
                 <td>
                   <Moment format="LLL">
                     {event.event_date}
-                  </Moment> </td>
+                  </Moment> 
+                  </td>
                 <td>{event.user.name}</td>
                 <td>
                   <Button
@@ -44,7 +47,11 @@ function Events(props) {
                       color: "green",
                     }}
                     variant="link"
-                    onClick={() => setShow(true)}
+                    onClick={() => {
+                      setShow(true)
+                      setEvent(event)
+                    }
+                  }
                   >
                     Pre-Register
                   </Button>
@@ -59,7 +66,10 @@ function Events(props) {
         <Modal.Header closeButton>
           <Modal.Title>Pre-Register</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Show details here</Modal.Body>
+        {/* <Modal.Body>Show details here</Modal.Body> */}
+        <Modal.Body>
+          <Preregistration event={event} />
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={() => setShow(false)}>
             Cancel

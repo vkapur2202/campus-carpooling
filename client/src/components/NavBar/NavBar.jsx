@@ -7,7 +7,6 @@ import Logout from "../Logout/Logout";
 import { Context } from "../Store/Store";
 import UserRegistrations from "../UserRegistrations/UserRegistrations";
 
-
 function Logo() {
   return (
     <Link to="/">
@@ -61,9 +60,9 @@ function LogoutLink() {
 function LoginLink() {
   return (
     <div className="navbar-right-item">
-      <Button>
-        <Link to="/login">Log In</Link>
-      </Button>
+      <Link to="/login">
+        <Button>Log In</Button>
+      </Link>
     </div>
   );
 }

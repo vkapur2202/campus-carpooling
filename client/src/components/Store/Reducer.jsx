@@ -10,6 +10,14 @@ const Reducer = (state, action) => {
         ...state,
         currentUser: action.payload,
       };
+    // case "SET_CURRENT_USER_INFORMATION":
+    //   return {
+    //     ...state,
+    //     currentUserYear: action.payload.year,
+    //     currentUserGender: action.payload.gender,
+    //     currentUserDrive: action.payload.can_drive,
+    //     currentUserMaxCap: action.payload.max_capacity,
+    //   }
     default:
       return state;
   }

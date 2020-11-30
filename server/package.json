@@ -58,6 +58,7 @@
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "graphql-yoga": "^1.18.3",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "psql": "0.0.1"
   }
 }
