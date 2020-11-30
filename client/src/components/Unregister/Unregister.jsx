@@ -6,6 +6,7 @@ import { UNREGISTER_MUTATION } from "../../GraphQLRequests";
 import { useMutation } from "@apollo/react-hooks";
 import { Redirect } from "react-router";
 import "../../App.css";
+import Moment from "react-moment";
 
 function Unregister(registration) {
   const currentRegisteredEvent = registration.registration.event;
@@ -47,7 +48,7 @@ function Unregister(registration) {
           <p>{currentRegisteredEvent.name}</p>
           <p>{currentRegisteredEvent.start_location}</p>
           <p>{currentRegisteredEvent.end_location}</p>
-          <p>{currentRegisteredEvent.event_date}</p>
+          <p> <Moment format="LLL">{currentRegisteredEvent.event_date}</Moment> </p>
           <p>Are you sure you want to unregister?</p>
           <Button onClick={handleSubmit} variant="primary">
             Unregister
