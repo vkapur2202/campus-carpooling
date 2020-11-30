@@ -6,10 +6,11 @@ import { SIGNUP_MUTATION } from "../../GraphQLRequests";
 import { useMutation } from "@apollo/react-hooks";
 import { useState } from "react";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
+import SignUpCSS from "./SignUp.css";
 
 function SignupForm() {
-  const initialFields = {
-  };
+  const initialFields = {};
   const [fields, setFields] = useState(initialFields);
   const [hasSignedUp, setHasSignedUp] = useState(false);
   const [signUpError, setSignUpError] = useState("");
@@ -92,10 +93,9 @@ function SignupForm() {
             onChange={handleInputChange}
             name="password"
           />
-          <Form.Text className="text-muted">
-            Password requirements
-          </Form.Text>
+          <Form.Text className="text-muted">Password requirements</Form.Text>
         </Form.Group>
+
         <Form.Group controlId="confirmPasswordGroup">
           <Form.Label>Confirm password</Form.Label>
           <Form.Control
@@ -105,9 +105,17 @@ function SignupForm() {
             name="confirm"
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
+        
+        <div className="flex-container">
+          <div className="Login">
+            <Link to="/login">Already have an account? Login here.</Link>
+          </div>
+          <div className="submitButton">
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </div>
+        </div>
       </Form>
     </div>
   );

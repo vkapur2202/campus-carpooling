@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import Unregister from "../Unregister/Unregister";
-import Moment from 'react-moment';
+import Moment from "react-moment";
 
 function Registrations(props) {
   const [unregisterShow, setUnregisterShow] = useState(false);
@@ -37,14 +37,10 @@ function Registrations(props) {
                 <td>{registration.event.start_location}</td>
                 <td>{registration.event.end_location}</td>
                 <td>
-                  <Moment format="LLL">
-                    {registration.event.event_date}
-                  </Moment> 
+                  <Moment format="LLL">{registration.event.event_date}</Moment>
                 </td>
                 <td>
-                  <Moment format="LLL">
-                    {registration.event.updated_on}
-                  </Moment> 
+                  <Moment format="LLL">{registration.event.updated_on}</Moment>
                 </td>
                 <td>{registration.event.user.name}</td>
                 <td>{registration.event.user.email}</td>
@@ -59,8 +55,7 @@ function Registrations(props) {
                     onClick={() => {
                       setUnregisterShow(true);
                       setRegistration(registration);
-                    }
-                    }
+                    }}
                   >
                     Unregister
                   </Button>

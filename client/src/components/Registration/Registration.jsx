@@ -6,7 +6,7 @@ import { REGISTER_MUTATION } from "../../GraphQLRequests";
 import { useMutation } from "@apollo/react-hooks";
 import { Redirect } from "react-router";
 import "../../App.css";
-import Moment from 'react-moment';
+import Moment from "react-moment";
 
 function Registration(event) {
   const registration = event.event;

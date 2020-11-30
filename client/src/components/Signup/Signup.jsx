@@ -2,16 +2,16 @@ import React from "react";
 import SignupForm from "./SignupForm";
 import { Link } from "react-router-dom";
 import "../../App.css";
+import SignUpCSS from "./SignUp.css";
 
 class Signup extends React.Component {
   render() {
     return (
       <div>
         <div className="content">
-          <div className="vertical-content">
+          <div className="vertical-content2">
             <h1>Sign Up</h1>
             <SignupForm />
-            <Link to="/login">Already have an account? Login here.</Link>
           </div>
         </div>
       </div>
