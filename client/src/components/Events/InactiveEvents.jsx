@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import Preregistration from "../Registration/Preregistration";
-import Moment from 'react-moment';
+import Moment from "react-moment";
 
 function Events(props) {
   const [show, setShow] = useState(false);
@@ -34,10 +34,8 @@ function Events(props) {
                 <td>{event.start_location}</td>
                 <td>{event.end_location}</td>
                 <td>
-                  <Moment format="LLL">
-                    {event.event_date}
-                  </Moment> 
-                  </td>
+                  <Moment format="LLL">{event.event_date}</Moment>
+                </td>
                 <td>{event.user.name}</td>
                 <td>
                   <Button
@@ -48,10 +46,9 @@ function Events(props) {
                     }}
                     variant="link"
                     onClick={() => {
-                      setShow(true)
-                      setEvent(event)
-                    }
-                  }
+                      setShow(true);
+                      setEvent(event);
+                    }}
                   >
                     Pre-Register
                   </Button>

@@ -1,27 +1,27 @@
 .nav-button {
-    position: relative;
-    /* display: flex; */
-    align-items: center;
-    /* left: 43%;
+  position: relative;
+  /* display: flex; */
+  align-items: center;
+  /* left: 43%;
     right: 50%; */
-    /* padding: 8px; */
-    /* text-decoration: none; */
-    /* transform: translate(0, -50%); */
-    min-width: 180px;
-    height: 60px;
+  /* padding: 8px; */
+  /* text-decoration: none; */
+  /* transform: translate(0, -50%); */
+  min-width: 180px;
+  height: 60px;
 }
 
 .homebuttons {
-    margin-left: 0px;
-    margin-right: 300px;
-    width: 100%;
-    /* padding: 20px; */
+  margin-left: 0px;
+  margin-right: 300px;
+  width: 100%;
+  /* padding: 20px; */
 }
 
 .vertical-content1 {
-    text-align: center;
+  text-align: center;
 }
 
 .h2 {
-    text-align: center;
+  text-align: center;
 }

@@ -2,10 +2,10 @@ import React from "react";
 import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import UpdateUserEvent from "../UpdateEvent/UpdateEvent"
-import DeleteUserEvent from "../DeleteUserEvent/DeleteEvent"
+import UpdateUserEvent from "../UpdateEvent/UpdateEvent";
+import DeleteUserEvent from "../DeleteUserEvent/DeleteEvent";
 import { useState } from "react";
-import Moment from 'react-moment';
+import Moment from "react-moment";
 
 function Events(props) {
   const [updateShow, setUpdateShow] = useState(false);
@@ -37,9 +37,7 @@ function Events(props) {
                 <td>{event.start_location}</td>
                 <td>{event.end_location}</td>
                 <td>
-                  <Moment format="LLL">
-                    {event.event_date}
-                  </Moment> 
+                  <Moment format="LLL">{event.event_date}</Moment>
                 </td>
                 <td>{event.user.name}</td>
                 <td>
@@ -53,8 +51,7 @@ function Events(props) {
                     onClick={() => {
                       setUpdateShow(true);
                       setEvent(event);
-                    }
-                    }
+                    }}
                   >
                     Update
                   </Button>
@@ -70,8 +67,7 @@ function Events(props) {
                     onClick={() => {
                       setDeleteShow(true);
                       setEvent(event);
-                    }
-                    }
+                    }}
                   >
                     Delete
                   </Button>

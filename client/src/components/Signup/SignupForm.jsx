@@ -8,8 +8,7 @@ import { useState } from "react";
 import { Redirect } from "react-router";
 
 function SignupForm() {
-  const initialFields = {
-  };
+  const initialFields = {};
   const [fields, setFields] = useState(initialFields);
   const [hasSignedUp, setHasSignedUp] = useState(false);
   const [signUpError, setSignUpError] = useState("");
@@ -92,9 +91,7 @@ function SignupForm() {
             onChange={handleInputChange}
             name="password"
           />
-          <Form.Text className="text-muted">
-            Password requirements
-          </Form.Text>
+          <Form.Text className="text-muted">Password requirements</Form.Text>
         </Form.Group>
         <Form.Group controlId="confirmPasswordGroup">
           <Form.Label>Confirm password</Form.Label>
