@@ -73,7 +73,7 @@ function ProfileForm() {
   return (
     <div>
       {profileError ? (
-        <Alert variant="danger">{profileError}</Alert>
+        <Alert variant="danger">{"Please fill out all of the information"}</Alert>
       ) : undefined}
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="yearGroup">

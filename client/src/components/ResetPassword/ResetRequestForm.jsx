@@ -47,7 +47,7 @@ function ResetRequestForm() {
   return (
     <div>
       {resetRequestError ? (
-        <Alert variant="danger">{resetRequestError}</Alert>
+        <Alert variant="danger">{resetRequestError.replace("GraphQL error: ", "")}</Alert>
       ) : undefined}
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="nameGroup">

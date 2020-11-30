@@ -64,7 +64,7 @@ function LoginForm() {
 
   return (
     <div>
-      {loginError ? <Alert variant="danger">{loginError}</Alert> : undefined}
+      {loginError ? <Alert variant="danger">{loginError.replace("GraphQL error: ", "")}</Alert> : undefined}
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="nameGroup">
           <Form.Label>Email</Form.Label>

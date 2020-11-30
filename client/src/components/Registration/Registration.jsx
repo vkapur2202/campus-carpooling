@@ -25,6 +25,7 @@ function Registration(event) {
         event_id: parseInt(registration.id),
       },
     };
+
     register(registerInput)
       .then((resp) => {
         setRegister(true);
