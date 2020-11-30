@@ -6,9 +6,11 @@ class About extends React.Component {
   render() {
     return (
       <div>
+        <div className="aboutHeader">
+          <h1>About CampusLive</h1>
+        </div>
         <div className="content">
           <div className="vertical-content6">
-            <h1>About CampusLive</h1>
             <div className="beautiful">
               <p>
                 Until now, college students have relied on texting individual
@@ -17,7 +19,10 @@ class About extends React.Component {
                 stress-inducing; from calculating availability to organzing
                 transportation, keeping track of each individuals' needs can be
                 a hassle. <br /> <br />
-                We, here at CampusLive, knew there had to be a better way.{" "}
+                <b>
+                  {" "}
+                  We, here at CampusLive, knew there had to be a better way.{" "}
+                </b>{" "}
                 <br />
                 <br />
                 We envisioned an application that would revolve around the
@@ -35,10 +40,10 @@ class About extends React.Component {
                 can also unregister for events. Additionally on the Your Events
                 page you can create a new event by filling out the information
                 for your trip. Once you've created an event, other users will
-                have the option of signing up for the event. <br /> <br /> Now that you know
-                how to use the app we hope you'll check out the available events
-                and set up your own to meet new people and make new friends
-                during your travels! <br /> <br />
+                have the option of signing up for the event. <br /> <br /> Now
+                that you know how to use the app we hope you'll check out the
+                available events and set up your own to meet new people and make
+                new friends during your travels! <br /> <br />
                 Disclaimer: CampusLive does not endorse social gatherings in the
                 current pandemic.
               </p>
