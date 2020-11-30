@@ -115,6 +115,7 @@ export const GET_ALL_EVENTS_QUERY = gql`
 export const GET_ALL_USER_EVENTS_QUERY = gql`
   query($id: ID!) {
     user(id: $id) {
+      id
       active_events {
         user {
           id
@@ -257,7 +258,9 @@ export const UNREGISTER_MUTATION = gql`
 export const GET_ALL_USER_REGISTRATIONS_QUERY = gql`
   query($id: ID!) {
     user(id: $id) {
+      id
       registrations {
+        id
         event {
           id
           name
@@ -268,6 +271,7 @@ export const GET_ALL_USER_REGISTRATIONS_QUERY = gql`
           is_active
           updated_on
           user {
+            id
             name
             email
           }

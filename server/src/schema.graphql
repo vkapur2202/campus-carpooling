@@ -12,10 +12,10 @@ type Query {
   activeEvents: [Event!]!
   inactiveEvents: [Event!]!
   events: [Event!]!
-  registration: Registration!
+  registration(id: ID!): Registration!
   registrations: [Registration!]!
-  userRegistrations: [Registration!]!
-  eventRegistrations: [Registration!]!
+  userRegistrations(id: ID!): [Registration!]!
+  eventRegistrations(id: ID!): [Registration!]!
 }
 
 type Mutation {
