@@ -9,7 +9,7 @@ function UpdateEvent(event) {
       <div className="content">
         <div className="vertical-content">
           <h1>Update Event</h1>
-          <UpdateEventForm event={event}/>
+          <UpdateEventForm event={event} />
         </div>
       </div>
     </div>

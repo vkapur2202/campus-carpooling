@@ -7,10 +7,12 @@ import { useMutation } from "@apollo/react-hooks";
 import { Redirect } from "react-router";
 import "../../App.css";
 import Moment from "react-moment";
+import { Link } from "react-router-dom";
 
 function Registration(event) {
-  const registration = event.event;
-
+  let storage = window.localStorage;
+  const registration = JSON.parse(storage.getItem("event"));
+  
   const [register] = useMutation(REGISTER_MUTATION, {
     errorPolicy: "all",
   });
@@ -30,10 +32,13 @@ function Registration(event) {
       .then((resp) => {
         setRegister(true);
       })
-      .catch((err) => setRegisterError(err.message));
+      .catch((err) => {
+        setRegisterError(err.message);
+        setTimeout(() => { setRegister(true) }, 1000);
+      });
   };
 
-  // if (hasRegistered) return <Redirect to="/" />;
+  if (hasRegistered) return <Redirect to="/" />;
   return (
     <div>
       {registerError ? (
@@ -51,9 +56,12 @@ function Registration(event) {
           <p>
             <Moment format="LLL">{registration.event_date}</Moment>
           </p>
-          <Button onClick={handleSubmit} variant="primary">
-            Register
-          </Button>{" "}
+
+          
+            <Button onClick={handleSubmit} variant="primary">
+              Register
+            </Button>{" "}
+          
           {/* <RegistrationConfirmation event={event}/> */}
         </div>
       </div>

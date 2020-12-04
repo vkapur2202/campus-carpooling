@@ -9,6 +9,7 @@ import { GET_ALL_EVENT_REGISTRATIONS_QUERY } from "../../GraphQLRequests";
 import { useQuery } from "@apollo/react-hooks";
 import { Context } from "../Store/Store";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 // const EventDetails = () => {
 //   const { loading, error, data } = (id) => {
@@ -27,6 +28,7 @@ import { useEffect } from "react";
 // };
 
 function Events(props) {
+  let storage = window.localStorage;
   const [show, setShow] = useState(false);
   const [event, setEvent] = useState();
   const [state, dispatch] = useContext(Context);
@@ -63,20 +65,28 @@ function Events(props) {
                 </td>
                 <td>{event.user.name}</td>
                 <td>
-                  <Button
-                    style={{
-                      padding: 0,
-                      fontWeight: "bold",
-                      color: "green",
-                    }}
-                    variant="link"
-                    onClick={() => {
-                      setShow(true);
-                      setEvent(event);
+                  <Link
+                    to={{
+                      pathname: `/register/${event.name}`,
+                      // state: { event: JSON.stringify(event) },
                     }}
                   >
-                    Register
-                  </Button>
+                    <Button
+                      style={{
+                        padding: 0,
+                        fontWeight: "bold",
+                        color: "green",
+                      }}
+                      variant="link"
+                      onClick={() => {
+                        setShow(true);
+                        setEvent(event);
+                        storage.setItem('event', JSON.stringify(event));
+                      }}
+                    >
+                      Register
+                    </Button>
+                  </Link>
                 </td>
               </tr>
             </tbody>
@@ -84,7 +94,7 @@ function Events(props) {
         </Table>
       </div>
 
-      <Modal show={show} onHide={() => setShow(false)}>
+      {/* <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Register</Modal.Title>
         </Modal.Header>
@@ -96,7 +106,7 @@ function Events(props) {
             Cancel
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </>
   );
 }

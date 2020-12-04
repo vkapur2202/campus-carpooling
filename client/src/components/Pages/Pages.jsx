@@ -33,6 +33,7 @@ function Pages() {
       <Route path="/activate/:email" component={ActivateAccount} />
       <Route path="/confirm/:token" component={UserConfirmation} />
       <Route path="/reset_password/:token" component={ResetPassword} />
+      <Route path="/register/:registration_name" component={Registration} />
     </Switch>
   );
 }
