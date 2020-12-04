@@ -1,8 +1,8 @@
-import React from "react";
-import LoginForm from "./LoginForm";
+import {React} from "react";
+import {LoginForm} from "./LoginForm";
 import "../../App.css";
 import { Link } from "react-router-dom";
-import LoginCSS from "./Login.css";
+import {LoginCSS} from "./Login.css";
 
 function Login() {
   return (

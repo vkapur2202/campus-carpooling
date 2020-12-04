@@ -5,26 +5,26 @@ import { MockedProvider } from "@apollo/react-testing";
 import { render } from "@testing-library/react";
 import { ACTIVATE_ACCOUNT_MUTATION } from "../../GraphQLRequests";
 
+it("renders the correct content", () => {
+    const activateAccountValue = {message : "Test Message"};
 
-const mocks = [
-    {
+    const activateAccountMock = [
+        {
         request:{
             query: ACTIVATE_ACCOUNT_MUTATION,
+            variables: {},
         },
         result:{
             data:{
-                activateAccount: {message: "Error Message" }
+                activateAccount: {activateAccountValue}
             },
         },
-    }
-]
+        }
+    ]
 
-
-it("renders the correct content", () => {
     render(
-        //<MockedProvider mocks={mocks} addTypename={false}>
+        //<MockedProvider mocks={activateAccountMock} addTypename={false}>
         //    <ActivateAccount/>
         //</MockedProvider>
-    );
+    )
 });
-

@@ -68,7 +68,7 @@ function LoginLink() {
 }
 
 function Nav() {
-  const [state, dispatch] = useContext(Context);
+  const {state, dispatch} = useContext(Context);
 
   return (
     <div className="nav">

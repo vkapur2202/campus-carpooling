@@ -8,7 +8,9 @@ import { MemoryRouter } from 'react-router-dom';
 it("renders the correct content", () => {
     render(
         //<MockedProvider >
+        //    <MemoryRouter>
         //    <Login/>
+        //    </MemoryRouter>
         //</MockedProvider>
     );
 });

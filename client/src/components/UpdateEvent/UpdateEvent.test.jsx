@@ -1,13 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import DeleteEvent from './DeleteEvent';
+import UpdateEvent from './UpdateEvent';
 import { MockedProvider } from "@apollo/react-testing";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from 'react-router-dom';
 
 it("renders the correct content", () => {
     const testEvent = {
-        id: 3,
         name: 'Test Event',
         max_participants: 4,
         start_location: 'Test Start',
@@ -18,9 +17,8 @@ it("renders the correct content", () => {
     render(
         <MockedProvider >
             <MemoryRouter>
-            <DeleteEvent events={testEvent}/>
+            <UpdateEvent event={testEvent}/>
             </MemoryRouter>
         </MockedProvider>
     );
 });
-
