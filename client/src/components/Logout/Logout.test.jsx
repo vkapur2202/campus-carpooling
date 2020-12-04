@@ -4,24 +4,30 @@ import { MockedProvider } from "@apollo/react-testing";
 import { render } from "@testing-library/react";
 import { LOGOUT_MUTATION } from "../../GraphQLRequests";
 
-const mocks = [
-    {
+
+
+
+it("renders the correct content", () => {
+    const logoutValue = {message : "Error Message"};
+
+    const logoutMock = [
+        {
         request:{
-            mutation: LOGOUT_MUTATION,
+            query: LOGOUT_MUTATION,
+            variables: {},
         },
         result:{
             data:{
-                logout: {message: "Error Message" }
+                logout: {logoutValue}
             },
         },
-    }
-]
+        }
+    ]
 
-it("renders the correct content", () => {
     render(
-        //<MockedProvider mocks={mocks} addTypename={false}>
-        //    <Logout/>
-        //</MockedProvider>
-    );
+        <MockedProvider mocks={logoutMock} addTypename={false}>
+            <Logout/>
+        </MockedProvider>
+    )
 });
 
