@@ -7,7 +7,7 @@
   "scripts": {
     "start": "dotenv -- react-scripts start",
     "build": "dotenv -- react-scripts build",
-    "test": "dotenv -- react-scripts test",
+    "test": "npx jest --coverage",
     "eject": "dotenv -- react-scripts eject",
     "lint": "eslint './**/*.{ts,tsx}' --fix"
   },
@@ -44,6 +44,8 @@
     "lint-staged": "^10.4.0"
   },
   "dependencies": {
+    "@apollo/react-testing": "^3.0.0",
+    "@testing-library/react": "^11.2.2",
     "apollo-boost": "^0.4.9",
     "apollo-client-preset": "^1.0.8",
     "apollo-link-context": "^1.0.20",
@@ -60,5 +62,11 @@
     "react-moment": "^1.0.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.3"
-  }
+  },
+  "jest":{
+    "moduleNameMapper": {
+     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+     "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+   }
+ }
 }
