@@ -61,7 +61,7 @@ function Events(props) {
                       onClick={() => {
                         setShow(true);
                         setEvent(event);
-                        storage.setItem('event', JSON.stringify(event));
+                        storage.setItem("event", JSON.stringify(event));
                       }}
                     >
                       Register
@@ -73,20 +73,6 @@ function Events(props) {
           ))}
         </Table>
       </div>
-
-      {/* <Modal show={show} onHide={() => setShow(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Register</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Registration event={event} />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="danger" onClick={() => setShow(false)}>
-            Cancel
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
     </>
   );
 }

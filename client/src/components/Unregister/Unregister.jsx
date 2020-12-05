@@ -31,7 +31,7 @@ function Unregister(registration) {
     unregister(registerInput)
       .then((resp) => {
         setRegister(true);
-        storage.removeItem('event');
+        storage.removeItem("event");
       })
       .catch((err) => setRegisterError(err.message));
   };
@@ -51,12 +51,19 @@ function Unregister(registration) {
           <p>{currentRegisteredEvent.name}</p>
           <p>{currentRegisteredEvent.start_location}</p>
           <p>{currentRegisteredEvent.end_location}</p>
-          <p> <Moment format="LLL">{currentRegisteredEvent.event_date}</Moment> </p>
+          <p>
+            {" "}
+            <Moment format="LLL">
+              {currentRegisteredEvent.event_date}
+            </Moment>{" "}
+          </p>
           <p>Are you sure you want to unregister?</p>
           <Button onClick={handleSubmit} variant="primary">
             Unregister
           </Button>
-          <Link to="/" onClick={() => storage.removeItem('event')}>Go back to home</Link>
+          <Link to="/" onClick={() => storage.removeItem("event")}>
+            Go back to home
+          </Link>
         </div>
       </div>
     </div>

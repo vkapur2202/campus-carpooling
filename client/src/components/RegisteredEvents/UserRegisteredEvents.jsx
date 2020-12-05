@@ -47,26 +47,29 @@ function Registrations(props) {
                 <td>{registration.event.user.name}</td>
                 <td>{registration.event.user.email}</td>
                 <td>
-                <Link
+                  <Link
                     to={{
                       pathname: `/unregister/${registration.event.name}`,
                     }}
                   >
-                  <Button
-                    style={{
-                      padding: 0,
-                      fontWeight: "bold",
-                      color: "red",
-                    }}
-                    variant="link"
-                    onClick={() => {
-                      setUnregisterShow(true);
-                      setRegistration(registration);
-                      storage.setItem('event', JSON.stringify(registration.event));
-                    }}
-                  >
-                    Unregister
-                  </Button>
+                    <Button
+                      style={{
+                        padding: 0,
+                        fontWeight: "bold",
+                        color: "red",
+                      }}
+                      variant="link"
+                      onClick={() => {
+                        setUnregisterShow(true);
+                        setRegistration(registration);
+                        storage.setItem(
+                          "event",
+                          JSON.stringify(registration.event)
+                        );
+                      }}
+                    >
+                      Unregister
+                    </Button>
                   </Link>
                 </td>
               </tr>
@@ -74,20 +77,6 @@ function Registrations(props) {
           ))}
         </Table>
       </div>
-
-      {/* <Modal show={unregisterShow} onHide={() => setUnregisterShow(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Unregister</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Unregister registration={registration} />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="danger" onClick={() => setUnregisterShow(false)}>
-            Cancel
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
     </>
   );
 }

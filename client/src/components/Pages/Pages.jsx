@@ -12,11 +12,13 @@ import ResetRequest from "../ResetPassword/ResetRequest";
 import ResetPassword from "../ResetPassword/ResetPassword";
 import CreateEvent from "../CreateEvent/CreateEvent";
 import UserEvents from "../UserEvents/UserEvents";
-import UpdateEvent from "../UpdateEvent/UpdateEvent";
+import UpdateUserEvent from "../UpdateEvent/UpdateEvent";
+import UpdateEventForm from "../UpdateEvent/UpdateEventForm";
 import Registration from "../Registration/Registration";
 import Preregistration from "../Registration/Preregistration";
 import UserRegistrations from "../UserRegistrations/UserRegistrations";
 import Unregister from "../Unregister/Unregister";
+import DeleteEvent from "../DeleteUserEvent/DeleteEvent";
 
 function Pages() {
   return (
@@ -25,7 +27,7 @@ function Pages() {
       <Route path="/about" component={About} />
       <Route path="/profile" component={Profile} />
       <Route path="/create_event" component={CreateEvent} />
-      <Route path="/update_event" component={UpdateEvent} />
+      <Route path="/update_event/:event_name" component={UpdateUserEvent} />
       <Route path="/registration" component={Registration} />
       <Route path="/registered_events" component={UserRegistrations} />
       <Route path="/your_events" component={UserEvents} />
@@ -36,8 +38,12 @@ function Pages() {
       <Route path="/confirm/:token" component={UserConfirmation} />
       <Route path="/reset_password/:token" component={ResetPassword} />
       <Route path="/register/:registration_name" component={Registration} />
-      <Route path="/preregister/:registration_name" component={Preregistration} />
+      <Route
+        path="/preregister/:registration_name"
+        component={Preregistration}
+      />
       <Route path="/unregister/:registration_name" component={Unregister} />
+      <Route path="/delete/:registration_name" component={DeleteEvent} />
     </Switch>
   );
 }

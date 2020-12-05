@@ -6,11 +6,14 @@ import UpdateUserEvent from "../UpdateEvent/UpdateEvent";
 import DeleteUserEvent from "../DeleteUserEvent/DeleteEvent";
 import { useState } from "react";
 import Moment from "react-moment";
+import { Link } from "react-router-dom";
 
 function Events(props) {
+  let storage = window.localStorage;
   const [updateShow, setUpdateShow] = useState(false);
   const [deleteShow, setDeleteShow] = useState(false);
-  const [event, setEvent] = useState();
+  const [event, setEvent] = useState({});
+
   return (
     <>
       <div className="inactiveEvents">
@@ -41,36 +44,50 @@ function Events(props) {
                 </td>
                 <td>{event.user.name}</td>
                 <td>
-                  <Button
-                    style={{
-                      padding: 0,
-                      fontWeight: "bold",
-                      color: "blue",
-                    }}
-                    variant="link"
-                    onClick={() => {
-                      setUpdateShow(true);
-                      setEvent(event);
+                  <Link
+                    to={{
+                      pathname: `/update_event/${event.name}`,
                     }}
                   >
-                    Update
-                  </Button>
+                    <Button
+                      style={{
+                        padding: 0,
+                        fontWeight: "bold",
+                        color: "blue",
+                      }}
+                      variant="link"
+                      onClick={() => {
+                        setUpdateShow(true);
+                        setEvent(event);
+                        storage.setItem("event", JSON.stringify(event));
+                      }}
+                    >
+                      Update
+                    </Button>
+                  </Link>
                 </td>
                 <td>
-                  <Button
-                    style={{
-                      padding: 0,
-                      fontWeight: "bold",
-                      color: "red",
-                    }}
-                    variant="link"
-                    onClick={() => {
-                      setDeleteShow(true);
-                      setEvent(event);
+                  <Link
+                    to={{
+                      pathname: `/delete/${event.name}`,
                     }}
                   >
-                    Delete
-                  </Button>
+                    <Button
+                      style={{
+                        padding: 0,
+                        fontWeight: "bold",
+                        color: "red",
+                      }}
+                      variant="link"
+                      onClick={() => {
+                        setDeleteShow(true);
+                        setEvent(event);
+                        storage.setItem("event", JSON.stringify(event));
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </Link>
                 </td>
               </tr>
             </tbody>
@@ -78,7 +95,7 @@ function Events(props) {
         </Table>
       </div>
 
-      <Modal show={updateShow} onHide={() => setUpdateShow(false)}>
+      {/* <Modal show={updateShow} onHide={() => setUpdateShow(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Update</Modal.Title>
         </Modal.Header>
@@ -90,7 +107,7 @@ function Events(props) {
             Cancel
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
       <Modal show={deleteShow} onHide={() => setDeleteShow(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Delete</Modal.Title>

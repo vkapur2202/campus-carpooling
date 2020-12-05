@@ -31,13 +31,10 @@ function Registration(event) {
     register(registerInput)
       .then((resp) => {
         setRegister(true);
-        storage.removeItem('event');
+        storage.removeItem("event");
       })
       .catch((err) => {
         setRegisterError(err.message);
-        // setTimeout(() => {
-        //   setRegister(true);
-        // }, 1000);
       });
   };
 
@@ -62,7 +59,9 @@ function Registration(event) {
           <Button onClick={handleSubmit} variant="primary">
             Pre-Register
           </Button>
-          <Link to="/" onClick={() => storage.removeItem('event')}>Go back to home</Link>
+          <Link to="/" onClick={() => storage.removeItem("event")}>
+            Go back to home
+          </Link>
         </div>
       </div>
     </div>
