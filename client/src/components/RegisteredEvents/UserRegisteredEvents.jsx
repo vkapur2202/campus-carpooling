@@ -5,15 +5,17 @@ import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import Unregister from "../Unregister/Unregister";
 import Moment from "react-moment";
+import { Link } from "react-router-dom";
 
 function Registrations(props) {
+  let storage = window.localStorage;
   const [unregisterShow, setUnregisterShow] = useState(false);
   const [registration, setRegistration] = useState();
   const [event, setEvent] = useState();
   return (
     <>
       <div className="inactiveEvents">
-        <h2> Your Registered Events</h2>
+        <br />
         <Table hover>
           <thead>
             <tr>
@@ -45,6 +47,11 @@ function Registrations(props) {
                 <td>{registration.event.user.name}</td>
                 <td>{registration.event.user.email}</td>
                 <td>
+                <Link
+                    to={{
+                      pathname: `/unregister/${registration.event.name}`,
+                    }}
+                  >
                   <Button
                     style={{
                       padding: 0,
@@ -55,10 +62,12 @@ function Registrations(props) {
                     onClick={() => {
                       setUnregisterShow(true);
                       setRegistration(registration);
+                      storage.setItem('event', JSON.stringify(registration.event));
                     }}
                   >
                     Unregister
                   </Button>
+                  </Link>
                 </td>
               </tr>
             </tbody>
@@ -66,7 +75,7 @@ function Registrations(props) {
         </Table>
       </div>
 
-      <Modal show={unregisterShow} onHide={() => setUnregisterShow(false)}>
+      {/* <Modal show={unregisterShow} onHide={() => setUnregisterShow(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Unregister</Modal.Title>
         </Modal.Header>
@@ -78,7 +87,7 @@ function Registrations(props) {
             Cancel
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </>
   );
 }

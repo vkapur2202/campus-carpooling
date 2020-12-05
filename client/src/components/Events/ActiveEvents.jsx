@@ -11,30 +11,11 @@ import { Context } from "../Store/Store";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-// const EventDetails = () => {
-//   const { loading, error, data } = (id) => {
-//     useQuery(GET_ALL_EVENT_REGISTRATIONS_QUERY, {
-//       variables: props.event.id,
-//     });
-//     if (data) {
-//       console.log(data);
-//     }
-//     if (loading) return null;
-//     if (error) return `Error! ${error}`;
-//     if (data) {
-//       console.log(data);
-//     }
-//   };
-// };
-
 function Events(props) {
   let storage = window.localStorage;
   const [show, setShow] = useState(false);
   const [event, setEvent] = useState();
   const [state, dispatch] = useContext(Context);
-  // console.log(state);
-  // console.log(props);
-  // const [events, {loading, data}] = useLazyQuery(GET_ALL_EVENT_REGISTRATIONS_QUERY);
 
   return (
     <>
@@ -68,7 +49,6 @@ function Events(props) {
                   <Link
                     to={{
                       pathname: `/register/${event.name}`,
-                      // state: { event: JSON.stringify(event) },
                     }}
                   >
                     <Button

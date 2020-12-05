@@ -5,8 +5,10 @@ import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import Preregistration from "../Registration/Preregistration";
 import Moment from "react-moment";
+import { Link } from "react-router-dom";
 
 function Events(props) {
+  let storage = window.localStorage;
   const [show, setShow] = useState(false);
   const [event, setEvent] = useState();
   return (
@@ -38,6 +40,11 @@ function Events(props) {
                 </td>
                 <td>{event.user.name}</td>
                 <td>
+                <Link
+                    to={{
+                      pathname: `/preregister/${event.name}`,
+                    }}
+                  >
                   <Button
                     style={{
                       padding: 0,
@@ -48,10 +55,12 @@ function Events(props) {
                     onClick={() => {
                       setShow(true);
                       setEvent(event);
+                      storage.setItem('event', JSON.stringify(event));
                     }}
                   >
                     Pre-Register
                   </Button>
+                  </Link>
                 </td>
               </tr>
             </tbody>
@@ -59,12 +68,12 @@ function Events(props) {
         </Table>
       </div>
 
-      <Modal show={show} onHide={() => setShow(false)}>
+      {/* <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Pre-Register</Modal.Title>
         </Modal.Header>
         {/* <Modal.Body>Show details here</Modal.Body> */}
-        <Modal.Body>
+        {/* <Modal.Body>
           <Preregistration event={event} />
         </Modal.Body>
         <Modal.Footer>
@@ -72,7 +81,7 @@ function Events(props) {
             Cancel
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */} 
     </>
   );
 }

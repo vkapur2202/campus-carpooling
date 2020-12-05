@@ -13,7 +13,7 @@ function UpdateEventForm(event) {
     max_participants: initialEvent.max_participants,
     start_location: initialEvent.start_location,
     end_location: initialEvent.end_location,
-    event_date: initialEvent.event_date
+    event_date: initialEvent.event_date,
   };
   const [fields, setFields] = useState(initialFields);
   const [updatedEventVariable, setUpdatedEventVariable] = useState({

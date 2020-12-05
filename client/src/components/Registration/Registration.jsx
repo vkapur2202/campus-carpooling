@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 function Registration(event) {
   let storage = window.localStorage;
   const registration = JSON.parse(storage.getItem("event"));
-  
+
   const [register] = useMutation(REGISTER_MUTATION, {
     errorPolicy: "all",
   });
@@ -31,10 +31,13 @@ function Registration(event) {
     register(registerInput)
       .then((resp) => {
         setRegister(true);
+        storage.removeItem('event');
       })
       .catch((err) => {
         setRegisterError(err.message);
-        setTimeout(() => { setRegister(true) }, 1000);
+        // setTimeout(() => {
+        //   setRegister(true);
+        // }, 1000);
       });
   };
 
@@ -56,13 +59,10 @@ function Registration(event) {
           <p>
             <Moment format="LLL">{registration.event_date}</Moment>
           </p>
-
-          
-            <Button onClick={handleSubmit} variant="primary">
-              Register
-            </Button>{" "}
-          
-          {/* <RegistrationConfirmation event={event}/> */}
+          <Button onClick={handleSubmit} variant="primary">
+            Register
+          </Button>
+          <Link to="/" onClick={() => storage.removeItem('event')}>Go back to home</Link>
         </div>
       </div>
     </div>

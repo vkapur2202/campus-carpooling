@@ -7,9 +7,11 @@ import { useMutation } from "@apollo/react-hooks";
 import { Redirect } from "react-router";
 import "../../App.css";
 import Moment from "react-moment";
+import { Link } from "react-router-dom";
 
 function Unregister(registration) {
-  const currentRegisteredEvent = registration.registration.event;
+  let storage = window.localStorage;
+  const currentRegisteredEvent = JSON.parse(storage.getItem("event"));
 
   console.log(currentRegisteredEvent);
   const [unregister] = useMutation(UNREGISTER_MUTATION, {
@@ -29,11 +31,12 @@ function Unregister(registration) {
     unregister(registerInput)
       .then((resp) => {
         setRegister(true);
+        storage.removeItem('event');
       })
       .catch((err) => setRegisterError(err.message));
   };
 
-  // if (hasRegistered) return <Redirect to="/" />;
+  if (hasRegistered) return <Redirect to="/" />;
   return (
     <div>
       {registerError ? (
@@ -52,8 +55,8 @@ function Unregister(registration) {
           <p>Are you sure you want to unregister?</p>
           <Button onClick={handleSubmit} variant="primary">
             Unregister
-          </Button>{" "}
-          {/* <RegistrationConfirmation event={event}/> */}
+          </Button>
+          <Link to="/" onClick={() => storage.removeItem('event')}>Go back to home</Link>
         </div>
       </div>
     </div>

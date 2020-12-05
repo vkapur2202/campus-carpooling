@@ -14,7 +14,9 @@ import CreateEvent from "../CreateEvent/CreateEvent";
 import UserEvents from "../UserEvents/UserEvents";
 import UpdateEvent from "../UpdateEvent/UpdateEvent";
 import Registration from "../Registration/Registration";
+import Preregistration from "../Registration/Preregistration";
 import UserRegistrations from "../UserRegistrations/UserRegistrations";
+import Unregister from "../Unregister/Unregister";
 
 function Pages() {
   return (
@@ -34,6 +36,8 @@ function Pages() {
       <Route path="/confirm/:token" component={UserConfirmation} />
       <Route path="/reset_password/:token" component={ResetPassword} />
       <Route path="/register/:registration_name" component={Registration} />
+      <Route path="/preregister/:registration_name" component={Preregistration} />
+      <Route path="/unregister/:registration_name" component={Unregister} />
     </Switch>
   );
 }
