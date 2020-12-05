@@ -18,11 +18,6 @@ function ProfileForm() {
   });
 
   const { loading, error, data } = useQuery(CURRENT_USER_QUERY);
-  // const [getUserInformation] = useQuery(CURRENT_USER_QUERY, {
-  //   errorPolicy: "all",
-  // });
-  // let userInformation;
-  // useEffect(() => getUserInformation().then(resp => userInformation = resp), []);
 
   const [profile] = useMutation(PROFILE_MUTATION, {
     errorPolicy: "all",
@@ -45,16 +40,17 @@ function ProfileForm() {
     const profileInput = {
       variables: {
         ...fields,
-        year: fields.year? fields.year : data.me.year,
-        gender: fields.gender? fields.gender : data.me.gender,
+        year: fields.year ? fields.year : data.me.year,
+        gender: fields.gender ? fields.gender : data.me.gender,
         can_drive: fields.can_drive === "true" ? true : false,
         max_capacity:
-          (fields.can_drive === "true" && fields.max_capacity) ? parseInt(fields.max_capacity, 10) : data.me.max_capacity,
+          fields.can_drive === "true" && fields.max_capacity
+            ? parseInt(fields.max_capacity, 10)
+            : data.me.max_capacity,
       },
     };
     profile(profileInput)
       .then((resp) => {
-        // dispatch({ type: "SET_CURRENT_USER_INFORMATION", payload: resp.data});
         setProfileVariable({
           hasSetProfile: true,
         });
@@ -67,13 +63,13 @@ function ProfileForm() {
 
   if (loading) return null;
   if (error) return `Error! ${error}`;
-  if (data) {
-    console.log(data);
-  }
+
   return (
     <div>
       {profileError ? (
-        <Alert variant="danger">{"Please fill out all of the information"}</Alert>
+        <Alert variant="danger">
+          {"Please fill out all of the information"}
+        </Alert>
       ) : undefined}
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="yearGroup">

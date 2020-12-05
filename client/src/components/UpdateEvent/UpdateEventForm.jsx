@@ -2,23 +2,27 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Alert } from "react-bootstrap";
-import { UPDATE_EVENT_MUTATION } from "../../GraphQLRequests";
-import { useMutation } from "@apollo/react-hooks";
+import { UPDATE_EVENT_MUTATION, GET_EVENT_QUERY } from "../../GraphQLRequests";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 
 function UpdateEventForm(event) {
-  const initialEvent = event.event.event;
+  let storage = window.localStorage;
+  const initialEvent = JSON.parse(storage.getItem('event'));
   const initialFields = {
     name: initialEvent.name,
     max_participants: initialEvent.max_participants,
     start_location: initialEvent.start_location,
     end_location: initialEvent.end_location,
-    event_date: initialEvent.event_date
+    event_date: initialEvent.event_date,
   };
   const [fields, setFields] = useState(initialFields);
   const [updatedEventVariable, setUpdatedEventVariable] = useState({
     hasUpdatedEvent: false,
   });
+
+  const { loading, error, data } = useQuery(GET_EVENT_QUERY, { variables: parseInt(initialEvent.id, 10), });
 
   const [updateEvent] = useMutation(UPDATE_EVENT_MUTATION, {
     errorPolicy: "all",
@@ -59,6 +63,7 @@ function UpdateEventForm(event) {
 
   const { hasUpdatedEvent } = updatedEventVariable;
   if (hasUpdatedEvent) return <Redirect to="/" />;
+
   return (
     <div>
       {updateEventError ? (
@@ -70,6 +75,7 @@ function UpdateEventForm(event) {
           <Form.Control
             type="text"
             name="name"
+            defaultValue={initialEvent.name}
             placeholder={initialEvent.name}
             onChange={handleInputChange}
           />
@@ -78,6 +84,7 @@ function UpdateEventForm(event) {
           <Form.Label>Max Participants</Form.Label>
           <Form.Control
             type="number"
+            defaultValue={initialEvent.max_participants}
             placeholder={initialEvent.max_participants}
             onChange={handleInputChange}
             name="max_participants"
@@ -88,6 +95,7 @@ function UpdateEventForm(event) {
           <Form.Control
             type="text"
             name="start_location"
+            defaultValue={initialEvent.start_location}
             placeholder={initialEvent.start_location}
             onChange={handleInputChange}
           />
@@ -97,6 +105,7 @@ function UpdateEventForm(event) {
           <Form.Control
             type="text"
             name="end_location"
+            defaultValue={initialEvent.end_location}
             placeholder={initialEvent.end_location}
             onChange={handleInputChange}
           />
@@ -106,8 +115,10 @@ function UpdateEventForm(event) {
           <Form.Control
             type="datetime-local"
             name="event_date"
+            defaultValue={new Date(initialEvent.event_date)}
             placeholder={new Date(initialEvent.event_date)}
             onChange={handleInputChange}
+            required
           />
         </Form.Group>
         <Button variant="primary" type="submit">

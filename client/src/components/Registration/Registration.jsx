@@ -7,9 +7,11 @@ import { useMutation } from "@apollo/react-hooks";
 import { Redirect } from "react-router";
 import "../../App.css";
 import Moment from "react-moment";
+import { Link } from "react-router-dom";
 
 function Registration(event) {
-  const registration = event.event;
+  let storage = window.localStorage;
+  const registration = JSON.parse(storage.getItem("event"));
 
   const [register] = useMutation(REGISTER_MUTATION, {
     errorPolicy: "all",
@@ -29,11 +31,14 @@ function Registration(event) {
     register(registerInput)
       .then((resp) => {
         setRegister(true);
+        storage.removeItem("event");
       })
-      .catch((err) => setRegisterError(err.message));
+      .catch((err) => {
+        setRegisterError(err.message);
+      });
   };
 
-  // if (hasRegistered) return <Redirect to="/" />;
+  if (hasRegistered) return <Redirect to="/" />;
   return (
     <div>
       {registerError ? (
@@ -53,8 +58,10 @@ function Registration(event) {
           </p>
           <Button onClick={handleSubmit} variant="primary">
             Register
-          </Button>{" "}
-          {/* <RegistrationConfirmation event={event}/> */}
+          </Button>
+          <Link to="/" onClick={() => storage.removeItem("event")}>
+            Go back to home
+          </Link>
         </div>
       </div>
     </div>

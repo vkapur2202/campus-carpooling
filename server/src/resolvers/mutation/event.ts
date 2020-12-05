@@ -103,22 +103,23 @@ export const Event = {
         throw new Error(`Error deleting event.`)
       })
 
-    const sent = await transport.sendMail({
-      from: config.MAIL_USER,
-      to: emails,
-      subject: `${config.APP_NAME}: Event "${eventToDelete.name}" Cancellation!`,
-      html: eventDeleteEmail(
-        `<p> 
+    if (emails.length > 0) {
+      const sent = await transport.sendMail({
+        from: config.MAIL_USER,
+        to: emails,
+        subject: `${config.APP_NAME}: Event "${eventToDelete.name}" Cancellation!`,
+        html: eventDeleteEmail(
+          `<p> 
             Name: ${eventToDelete.name} <br> Maximum Participants: ${eventToDelete.max_participants} <br> Start Location: ${eventToDelete.start_location} 
             <br> End Location: ${eventToDelete.end_location} <br> Event Date and Time: ${eventToDelete.event_date}
           </p>`
-      ),
-    })
+        ),
+      })
 
-    if (!sent) {
-      throw new Error(`Couldn't send email to registered users`)
+      if (!sent) {
+        throw new Error(`Couldn't send email to registered users`)
+      }
     }
-
     return { message: 'Event successfully deleted!' }
   },
 
@@ -171,20 +172,22 @@ export const Event = {
         throw new Error(`Error updating event.`)
       })
 
-    const sent = await transport.sendMail({
-      from: config.MAIL_USER,
-      to: emails,
-      subject: `${config.APP_NAME}: Event "${updateEvent.name}" Update!`,
-      html: eventUpdateEmail(
-        `<p> 
+    if (emails.length > 0) {
+      const sent = await transport.sendMail({
+        from: config.MAIL_USER,
+        to: emails,
+        subject: `${config.APP_NAME}: Event "${updateEvent.name}" Update!`,
+        html: eventUpdateEmail(
+          `<p> 
             Name: ${updateEvent.name} <br> Maximum Participants: ${updateEvent.max_participants} <br> Start Location: ${updateEvent.start_location} 
             <br> End Location: ${updateEvent.end_location} <br> Event Date and Time: ${updateEvent.event_date}
           </p>`
-      ),
-    })
+        ),
+      })
 
-    if (!sent) {
-      throw new Error(`Couldn't send email to registered users`)
+      if (!sent) {
+        throw new Error(`Couldn't send email to registered users`)
+      }
     }
     return updateEvent
   },
