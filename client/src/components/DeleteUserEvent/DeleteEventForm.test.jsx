@@ -7,7 +7,9 @@ import { MemoryRouter } from 'react-router-dom';
 import { DELETE_EVENT_MUTATION } from "../../GraphQLRequests";
 
 it("renders the correct content", () => {
+    /*
     const testEvent = {
+        id: 4,
         name: 'Test Event',
         max_participants: 4,
         start_location: 'Test Start',
@@ -29,17 +31,18 @@ it("renders the correct content", () => {
             },
             result:{
                 data:{
-                    logout: {Value}
+                    deleteEvent: {Value}
                 },
             },
             }
     ]
 
     render(
-        //<MockedProvider mocks={mocks} addTypename={false}>
-        //    <MemoryRouter>
-        //    <DeleteEventForm event={testEvent}/>
-        //    </MemoryRouter>
-        //</MockedProvider>
+        <MockedProvider mocks={mocks} addTypename={false}>
+            <MemoryRouter>
+            <DeleteEventForm event={testEvent}/>
+            </MemoryRouter>
+        </MockedProvider>
     );
+    */
 });
