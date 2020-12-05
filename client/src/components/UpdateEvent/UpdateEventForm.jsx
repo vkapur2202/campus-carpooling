@@ -15,7 +15,7 @@ function UpdateEventForm(event) {
     end_location: initialEvent.end_location,
     event_date: initialEvent.event_date
   };
-  const [zfields, setFields] = useState(initialFields);
+  const [fields, setFields] = useState(initialFields);
   const [updatedEventVariable, setUpdatedEventVariable] = useState({
     hasUpdatedEvent: false,
   });
