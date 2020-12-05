@@ -1,4 +1,4 @@
-# CampusCarpooling
+# CampusLive
 
 ## Structure
 
