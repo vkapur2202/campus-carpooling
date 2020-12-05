@@ -5,7 +5,7 @@ import { Context } from "../Store/Store";
 import { useMutation } from "@apollo/react-hooks";
 
 function Logout() {
-  const {state, dispatch} = useContext(Context);
+  const [state, dispatch] = useContext(Context);
 
   const [logout] = useMutation(LOGOUT_MUTATION, {
     errorPolicy: "all",

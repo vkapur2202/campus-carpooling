@@ -11,9 +11,9 @@ import ProfileCSS from "./Profile.css";
 
 function ProfileForm() {
   const initialFields = {};
-  const {state, dispatch} = useContext(Context);
-  const {fields, setFields} = useState(initialFields);
-  const {profileVariable, setProfileVariable} = useState({
+  const [state, dispatch] = useContext(Context);
+  const [fields, setFields] = useState(initialFields);
+  const [profileVariable, setProfileVariable] = useState({
     hasSetProfile: false,
   });
 
@@ -27,7 +27,7 @@ function ProfileForm() {
   const [profile] = useMutation(PROFILE_MUTATION, {
     errorPolicy: "all",
   });
-  const {profileError, setProfileError} = useState("");
+  const [profileError, setProfileError] = useState("");
 
   const handleInputChange = (event) => {
     const target = event.target;

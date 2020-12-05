@@ -8,8 +8,8 @@ import ActivateAccountCSS from "./ActivateAccount.css";
 function ActivateAccount(props) {
   const email = props.match.params.email;
 
-  const {isEmailSent, setIsEmailSent} = useState(false);
-  const {activateMutationError, setActivateMutationError} = useState("");
+  const [isEmailSent, setIsEmailSent] = useState(false);
+  const [activateMutationError, setActivateMutationError] = useState("");
 
   const [activate] = useMutation(ACTIVATE_ACCOUNT_MUTATION, {
     errorPolicy: "all",

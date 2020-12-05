@@ -11,9 +11,9 @@ import { Link } from "react-router-dom";
 
 function LoginForm() {
   const initialFields = {};
-  const {state, dispatch} = useContext(Context);
-  const {fields, setFields} = useState(initialFields);
-  const {loginVariables, setLoginVariables} = useState({
+  const [state, dispatch] = useContext(Context);
+  const [fields, setFields] = useState(initialFields);
+  const [loginVariables, setLoginVariables] = useState({
     isLoggedIn: false,
     isConfirmed: false,
   });
@@ -21,7 +21,7 @@ function LoginForm() {
   const [login] = useMutation(LOGIN_MUTATION, {
     errorPolicy: "all",
   });
-  const {loginError, setLoginError} = useState("");
+  const [loginError, setLoginError] = useState("");
 
   const handleInputChange = (event) => {
     const target = event.target;
